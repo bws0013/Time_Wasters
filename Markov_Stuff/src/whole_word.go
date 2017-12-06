@@ -82,6 +82,8 @@ func pick_next_letter_index(char_counts [28]int) rune {
 }
 
 func read_by_letters(lines []string, letter_count int) map[string][]int {
+
+
   return nil
 }
 
@@ -90,7 +92,9 @@ func read_by_letter(lines []string) map[rune][28]int {
 
   current_index := 'a' - 97
 
-  for _, line := range lines {
+
+  for 0 := 1; i < len(lines); i++
+    line := lines[i]
     if len(line) == 0 { continue }
     for _, char := range line {
       if char == '.' {

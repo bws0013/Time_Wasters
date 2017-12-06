@@ -1,0 +1,9 @@
+# Ignore the build and lib dirs
+build
+lib/*
+
+# Ignore any executables
+bin/*
+
+# File that has the potential to have password info
+do_not_upload.txt
