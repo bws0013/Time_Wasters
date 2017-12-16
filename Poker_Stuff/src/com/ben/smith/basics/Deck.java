@@ -29,6 +29,19 @@ public class Deck {
         }
     }
 
+    public Card get(int index) {
+        return deck[index];
+    }
+
+    // Get cards inclusive start, exclusive end
+    public Card[] get(int index_start, int index_end) {
+        Card[] cards = new Card[index_end - index_start];
+        for(int i = index_start; i < index_end; i++) {
+            cards[i - index_start] = deck[i];
+        }
+        return cards;
+    }
+
     public int size() {
         return deck.length;
     }

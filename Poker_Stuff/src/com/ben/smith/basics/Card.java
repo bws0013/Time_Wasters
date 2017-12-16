@@ -19,7 +19,11 @@ public class Card {
     }
 
     public void print_card() {
-        System.out.printf("Number: %s, Suit: %s\n", number, suit);
+        System.out.printf("[Number: %s, Suit: %s]\n", number, suit);
+    }
+
+    public String get_card_string() {
+        return String.format("[Number: %s, Suit: %s]", number, suit);
     }
 
     public int getNumber() {
