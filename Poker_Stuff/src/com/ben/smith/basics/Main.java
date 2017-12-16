@@ -10,6 +10,12 @@ public class Main {
         Deck d = new Deck();
         System.out.println(d.size());
         d.print_deck();
+        System.out.println(d.size());
+        d.shuffle();
+        d.print_deck();
+        System.out.println(d.size());
+        d.shuffle();
+        d.print_deck();
     }
 
 

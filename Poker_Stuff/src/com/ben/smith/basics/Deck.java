@@ -1,5 +1,9 @@
 package com.ben.smith.basics;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by bensmith on 12/15/17.
  */
@@ -29,5 +33,10 @@ public class Deck {
         return deck.length;
     }
 
+    public void shuffle() {
+        List<Card> temp_deck = Arrays.asList(deck);
+        Collections.shuffle(temp_deck);
+        deck = temp_deck.toArray(deck);
+    }
 
 }
