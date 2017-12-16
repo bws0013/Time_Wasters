@@ -21,7 +21,11 @@ public class Main {
 
         System.out.println(val);
 
-        hp.add_cards(d.get(7,9));
+        hp.add_cards(d.get(8,12));
+
+        val = hp.straight();
+
+        System.out.println(val);
 
         hp.print_numbers();
     }
