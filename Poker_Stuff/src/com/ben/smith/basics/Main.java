@@ -17,17 +17,20 @@ public class Main {
 
         hp.add_cards(d.get(2,4));
 
-        int val = hp.straight();
 
-        System.out.println(val);
-
+//        int val = hp.straight();
+//
+//        System.out.println(val);
+//
         hp.add_cards(d.get(8,12));
+//
+//        val = hp.straight();
+//
+//        System.out.println(val);
+//
+//        hp.print_numbers();
 
-        val = hp.straight();
-
-        System.out.println(val);
-
-        hp.print_numbers();
+        int c = hp.flush();
     }
 
 

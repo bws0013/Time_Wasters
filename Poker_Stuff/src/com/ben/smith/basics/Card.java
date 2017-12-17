@@ -3,7 +3,7 @@ package com.ben.smith.basics;
 /**
  * Created by bensmith on 12/15/17.
  */
-public class Card {
+public class Card implements Comparable<Card> {
 
     // 2 3 4 5 6 7 8 9 10 j  q  k  a
     // 2 3 4 5 6 7 8 9 10 11 12 13 14
@@ -16,6 +16,17 @@ public class Card {
     public Card(int number, int suit) {
         this.number = number;
         this.suit = suit;
+    }
+
+    @Override
+    public int compareTo(Card c) {
+        if(this.getNumber() > c.getNumber()) {
+            return 1;
+        } else if(this.getNumber() == c.getNumber()) {
+            return 0;
+        } else {
+            return -1;
+        }
     }
 
     public void print_card() {

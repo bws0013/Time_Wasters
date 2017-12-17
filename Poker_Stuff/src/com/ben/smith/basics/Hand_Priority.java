@@ -1,5 +1,7 @@
 package com.ben.smith.basics;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,7 +10,7 @@ import java.util.List;
 public class Hand_Priority {
 
     private int score;
-    private List<Card> all_cards;
+    private List<Card> all_cards = new ArrayList<Card>();
 
     private int[] numbers = new int[15];
     private int[] suits = new int[4];
@@ -61,14 +63,24 @@ public class Hand_Priority {
         }
         if(flush_index == -1) { return -1; }
 
-        Card[] flush_cards = new Card[suits[flush_index]];
+        List<Card> suit_cards = new ArrayList<Card>();
 
-        int j = 0;
         for(int i = 0; i < all_cards.size(); i++) {
             if(all_cards.get(i).getSuit() == flush_index) {
-                flush_cards[j] = all_cards.get(i);
-                j++;
+                suit_cards.add(all_cards.get(i));
             }
+        }
+
+        Collections.sort(suit_cards);
+
+        Card[] flush_cards = new Card[5];
+
+        for(int i = 0; i < 5; i++) {
+            flush_cards[i] = suit_cards.get(suit_cards.size() - 1 - i);
+        }
+
+        for(Card c : flush_cards) {
+            c.print_card();
         }
 
         return 0;
