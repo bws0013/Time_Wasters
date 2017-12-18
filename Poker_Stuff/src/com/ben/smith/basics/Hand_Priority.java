@@ -23,18 +23,45 @@ public class Hand_Priority {
     }
 
 
+    // TODO this and see if we can combine pairs and 3ok into one method.
+    public Card[] get_pair(int number_of_pairs_to_skip) {
+        Card[] return_cards = null;
+
+        int number_to_get;
+        for(int i = numbers.length - 1; i <= 2; i--) {
+            if(numbers[i] > 1) {
+                number_of_pairs_to_skip--;
+            }
+            if(number_of_pairs_to_skip == 0) {
+                number_to_get = i;
+            }
+        }
+
+        System.out.println(i);
+
+        return return_cards;
+    }
+
+    public Card get_high_card(int number_of_cards_to_skip) {
+        Card return_card = null;
+        Collections.sort(all_cards);
+        return all_cards.get(all_cards.size() - 1 - number_of_cards_to_skip);
+    }
+
     public void add_cards(Card[] cards) {
         for(Card c : cards) {
             all_cards.add(c);
             numbers[c.getNumber()]++;
             suits[c.getSuit()]++;
-        }
-        if(numbers[14] != 0) {
-            numbers[1] = 1;
+            if(c.getNumber() == 14) {
+                all_cards.add(new Card(1, c.getSuit()));
+                numbers[1]++;
+            }
         }
     }
 
-    public int straight() {
+    public Card[] straight() {
+        Card[] straight_cards = null;
         int highest_num = -1;
         int longest_seq = 0;
         for(int i = 1; i < numbers.length; i++) {
@@ -47,14 +74,23 @@ public class Hand_Priority {
                 longest_seq = 0;
             }
         }
-        if(longest_seq > 4) {
-            highest_num = numbers.length - 1;
+        if(highest_num > -1) {
+            straight_cards = new Card[5];
+            for(int i = 0; i < 5; i++) {
+                for(int j = 0; j < all_cards.size(); j++) {
+                    if(all_cards.get(j).getNumber() == highest_num - i) {
+                        straight_cards[i] = all_cards.get(j);
+                        break;
+                    }
+                }
+            }
+
         }
 
-        return highest_num;
+        return straight_cards;
     }
 
-    public int flush() {
+    public Card[] flush() {
 
         int flush_index = -1;
         for(int i = 0; i < suits.length; i++) {
@@ -62,7 +98,7 @@ public class Hand_Priority {
                 flush_index = i;
             }
         }
-        if(flush_index == -1) { return -1; }
+        if(flush_index == -1) { return null; }
 
         List<Card> suit_cards = new ArrayList<Card>();
 
@@ -80,10 +116,7 @@ public class Hand_Priority {
             flush_cards[i] = suit_cards.get(suit_cards.size() - 1 - i);
         }
 
-        for(Card c : flush_cards) {
-            c.print_card();
-        }
-        return 0;
+        return flush_cards;
     }
 
     public int getScore() {

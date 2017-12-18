@@ -23,6 +23,9 @@ public class Card implements Comparable<Card> {
         if(this.getNumber() > c.getNumber()) {
             return 1;
         } else if(this.getNumber() == c.getNumber()) {
+            if(c.getSuit() > this.getNumber()) {
+                return 1;
+            }
             return 0;
         } else {
             return -1;
