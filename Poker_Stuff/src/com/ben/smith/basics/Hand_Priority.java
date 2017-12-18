@@ -22,6 +22,7 @@ public class Hand_Priority {
         add_cards(community);
     }
 
+
     public void add_cards(Card[] cards) {
         for(Card c : cards) {
             all_cards.add(c);
@@ -82,7 +83,6 @@ public class Hand_Priority {
         for(Card c : flush_cards) {
             c.print_card();
         }
-
         return 0;
     }
 
