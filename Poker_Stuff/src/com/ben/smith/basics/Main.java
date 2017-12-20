@@ -17,16 +17,24 @@ public class Main {
 
 //        hp.add_cards(d.get(2,4));
 
-        hp.add_cards(d.get(3,5));
+        hp.add_cards(d.get(2,4));
 
-        hp.add_cards(d.get(3,5));
-
-        hp.add_cards(d.get(3,4));
 
         hp.print_numbers();
 
+        Card[] cc = hp.straight();
 
-        Card[] cc = hp.get_pair(0);
+//        Card[] cc = hp.get_pair(0);
+        if(cc == null) {
+            System.out.println("Its null");
+        } else {
+            for(Card c : cc) {
+                c.print_card();
+            }
+        }
+
+        cc = hp.straight(cc);
+
         if(cc == null) {
             System.out.println("Its null");
         } else {

@@ -1,6 +1,7 @@
 package com.ben.smith.basics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,18 +23,38 @@ public class Hand_Priority {
         add_cards(community);
     }
 
+    // To check for royal flush see if cards[0] == 14 (ie the highest number in the straight-flush is an ace)
+    public Card[] test_straight_flush() {
+        Card[] cards = null;
+        if(straight() != null && flush() != null) {
+            cards = straight(straight());
+        }
+        return cards;
+    }
 
-    // TODO this and see if we can combine pairs and 3ok into one method.
+
     public Card[] get_pair(int number_of_pairs_to_skip) {
         Card[] return_cards = null;
 
-        // TODO work on the below for detecting at least a pair.
-//        int most_instances_index = 2;
-//        for(int i = 3; i < numbers.length; i++) {
-//            if(numbers[i] > numbers[most_instances_index]) {
-//                most_instances_index = i;
-//            }
-//        }
+
+        int most_instances_index = 1;
+        for(int i = 3; i < numbers.length; i++) {
+            if(numbers[i] > numbers[most_instances_index]) {
+                most_instances_index = i;
+            }
+        }
+
+        if(number_of_pairs_to_skip == 0 && most_instances_index != 1) {
+            return_cards = new Card[numbers[most_instances_index]];
+            int i = 0;
+            for(Card c : all_cards) {
+                if(c.getNumber() == most_instances_index) {
+                    return_cards[i] = c;
+                    i++;
+                }
+            }
+            return return_cards;
+        }
 
         int number_to_get = -1; // Equal to the index of the number ie 2 -> 2, 7 -> 7
         for(int i = numbers.length - 1; i >= 2; i--) {
@@ -56,8 +77,6 @@ public class Hand_Priority {
             }
         }
 
-        System.out.println(number_to_get);
-
         return return_cards;
     }
 
@@ -77,6 +96,35 @@ public class Hand_Priority {
                 numbers[1]++;
             }
         }
+    }
+
+    public Card[] straight(Card[] suited_cards) {
+        List<Card> suited_card_list = Arrays.asList(suited_cards);
+        Collections.sort(suited_card_list);
+
+        Card[] straight_cards = null;
+
+        int longest_seq = 1;
+        int highest_index = 0;
+        for(int i = 1; i < suited_card_list.size(); i++) {
+            if(suited_card_list.get(i).getNumber() - 1 == suited_card_list.get(i - 1).getNumber()) {
+                longest_seq++;
+            } else {
+                longest_seq = 1;
+            }
+            if(longest_seq > 4) {
+                highest_index = i;
+            }
+        }
+
+        if(highest_index != 0) {
+            straight_cards = new Card[5];
+            for (int i = 0; i < 5; i++) {
+                straight_cards[i] = suited_card_list.get(highest_index - i);
+            }
+        }
+
+        return straight_cards;
     }
 
     public Card[] straight() {
