@@ -19,9 +19,14 @@ public class Main {
 
         hp.add_cards(d.get(3,5));
 
-//        hp.print_numbers();
+        hp.add_cards(d.get(3,5));
 
-        Card[] cc = hp.straight();
+        hp.add_cards(d.get(3,4));
+
+        hp.print_numbers();
+
+
+        Card[] cc = hp.get_pair(0);
         if(cc == null) {
             System.out.println("Its null");
         } else {
@@ -29,11 +34,11 @@ public class Main {
                 c.print_card();
             }
         }
-
-        Card c = hp.get_high_card(0);
-        c.print_card();
-        c = hp.get_high_card(1);
-        c.print_card();
+//
+//        Card c = hp.get_high_card(0);
+//        c.print_card();
+//        c = hp.get_high_card(1);
+//        c.print_card();
 //
 
 //        int val = hp.straight();

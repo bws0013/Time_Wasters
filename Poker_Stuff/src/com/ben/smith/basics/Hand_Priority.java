@@ -27,17 +27,36 @@ public class Hand_Priority {
     public Card[] get_pair(int number_of_pairs_to_skip) {
         Card[] return_cards = null;
 
-        int number_to_get;
-        for(int i = numbers.length - 1; i <= 2; i--) {
+        // TODO work on the below for detecting at least a pair.
+//        int most_instances_index = 2;
+//        for(int i = 3; i < numbers.length; i++) {
+//            if(numbers[i] > numbers[most_instances_index]) {
+//                most_instances_index = i;
+//            }
+//        }
+
+        int number_to_get = -1; // Equal to the index of the number ie 2 -> 2, 7 -> 7
+        for(int i = numbers.length - 1; i >= 2; i--) {
             if(numbers[i] > 1) {
                 number_of_pairs_to_skip--;
-            }
-            if(number_of_pairs_to_skip == 0) {
-                number_to_get = i;
+                if(number_of_pairs_to_skip <= 0) {
+                    number_to_get = i;
+                }
             }
         }
 
-        System.out.println(i);
+        if(number_to_get > 1) {
+            return_cards = new Card[numbers[number_to_get]];
+            int i = 0;
+            for(Card c : all_cards) {
+                if(c.getNumber() == number_to_get) {
+                    return_cards[i] = c;
+                    i++;
+                }
+            }
+        }
+
+        System.out.println(number_to_get);
 
         return return_cards;
     }
