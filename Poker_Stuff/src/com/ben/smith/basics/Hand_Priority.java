@@ -10,17 +10,33 @@ import java.util.List;
  */
 public class Hand_Priority {
 
-    private int score;
+    // A list of every card (including hand) that we have seen
     private List<Card> all_cards = new ArrayList<Card>();
 
+    // The numerical representation of the value of each card
     private int[] numbers = new int[15];
+    // A count of the relative suits of all of the cards we have seen
     private int[] suits = new int[4];
 
+    // Pass in your hand and any community cards that have been revealed
     public Hand_Priority(Hand hand, Card[] community) {
         Card[] hand_cards = hand.get_hand();
 
         add_cards(hand_cards);
         add_cards(community);
+    }
+
+    // Add more cards to our list of revealed cards
+    public void add_cards(Card[] cards) {
+        for(Card c : cards) {
+            all_cards.add(c);
+            numbers[c.getNumber()]++;
+            suits[c.getSuit()]++;
+            if(c.getNumber() == 14) {
+                all_cards.add(new Card(1, c.getSuit()));
+                numbers[1]++;
+            }
+        }
     }
 
     // To check for royal flush see if cards[0] == 14 (ie the highest number in the straight-flush is an ace)
@@ -32,7 +48,7 @@ public class Hand_Priority {
         return cards;
     }
 
-
+    // Get at least a pair, at most 4 of a kind
     public Card[] get_pair(int number_of_pairs_to_skip) {
         Card[] return_cards = null;
 
@@ -80,24 +96,15 @@ public class Hand_Priority {
         return return_cards;
     }
 
+    // Get the high card, pass in a number to skip that many cards, ie the second high card would skip 1 card
     public Card get_high_card(int number_of_cards_to_skip) {
         Card return_card = null;
         Collections.sort(all_cards);
         return all_cards.get(all_cards.size() - 1 - number_of_cards_to_skip);
     }
 
-    public void add_cards(Card[] cards) {
-        for(Card c : cards) {
-            all_cards.add(c);
-            numbers[c.getNumber()]++;
-            suits[c.getSuit()]++;
-            if(c.getNumber() == 14) {
-                all_cards.add(new Card(1, c.getSuit()));
-                numbers[1]++;
-            }
-        }
-    }
-
+    // Accepts a subset of cards, this is mainly used for detecting straight flushes
+    // Returns the 5 largest cards that make a straight if there is a possible straight
     public Card[] straight(Card[] suited_cards) {
         List<Card> suited_card_list = Arrays.asList(suited_cards);
         Collections.sort(suited_card_list);
@@ -127,6 +134,7 @@ public class Hand_Priority {
         return straight_cards;
     }
 
+    // Returns the 5 largest cards that make a straight if there is a possible straight
     public Card[] straight() {
         Card[] straight_cards = null;
         int highest_num = -1;
@@ -157,6 +165,7 @@ public class Hand_Priority {
         return straight_cards;
     }
 
+    // Returns the 5 largest cards that make a flush if there is a possible flush
     public Card[] flush() {
 
         int flush_index = -1;
@@ -186,16 +195,15 @@ public class Hand_Priority {
         return flush_cards;
     }
 
-    public int getScore() {
-        return score;
-    }
 
+    // Print the number values of cards from 1 (ace low) to 14 (ace high)
     public void print_numbers() {
         for(int i = 1; i < numbers.length; i++) {
             System.out.println(i + " : " + numbers[i]);
         }
     }
 
+    // Print the suits of all of the cards that have been seen
     public void print_suits() {
         for(int i = 0; i < suits.length; i++) {
             System.out.println(i + " : " + suits[i]);

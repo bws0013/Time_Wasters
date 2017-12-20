@@ -23,6 +23,7 @@ public class Deck {
         this.deck = deck;
     }
 
+    // Print each card
     public void print_deck() {
         for(Card c : deck) {
             c.print_card();
@@ -46,6 +47,7 @@ public class Deck {
         return deck.length;
     }
 
+    // Shuffle a deck, this is currently used for randomly getting cards, later on I will just generate numbers
     public void shuffle() {
         List<Card> temp_deck = Arrays.asList(deck);
         Collections.shuffle(temp_deck);
