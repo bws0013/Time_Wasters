@@ -39,6 +39,56 @@ public class Hand_Priority {
         }
     }
 
+    public void get_hand() {
+
+        Card[] final_hand = new Card[5];
+
+        Card[] straight = straight();
+        Card[] flush = flush();
+
+
+
+        Card[] pair = get_pair(0);
+        if(pair == null) {
+            for(int i = 0; i < final_hand.length; i++) {
+                final_hand[i] = get_high_card(i);
+            }
+        } else if(pair.length == 2) {
+            for(int i = 0; i < 2; i++) {
+                final_hand[i] = pair[i];
+            }
+            pair = get_pair(1);
+            if(pair == null) {
+                final_hand[3] = get_high_card(0);
+                final_hand[3] = get_high_card(1);
+                final_hand[4] = get_high_card(2);
+            } else {
+                for(int i = 0; i < 2; i++) {
+                    final_hand[2 + i] = pair[i];
+                }
+            }
+        } else if(pair.length == 3) {
+            for(int i = 0; i < 3; i++) {
+                final_hand[i] = pair[i];
+            }
+            pair = get_pair(1);
+            if(pair == null) {
+                final_hand[3] = get_high_card(0);
+                final_hand[4] = get_high_card(1);
+            } else {
+                for(int i = 0; i < 2; i++) {
+                    final_hand[3 + i] = pair[i];
+                }
+            }
+        } else if(pair.length == 4) {
+            for(int i = 0; i < 4; i++) {
+                final_hand[i] = pair[i];
+            }
+            final_hand[4] = get_high_card(0);
+        }
+
+    }
+
     // To check for royal flush see if cards[0] == 14 (ie the highest number in the straight-flush is an ace)
     public Card[] test_straight_flush() {
         Card[] cards = null;
@@ -208,5 +258,14 @@ public class Hand_Priority {
         for(int i = 0; i < suits.length; i++) {
             System.out.println(i + " : " + suits[i]);
         }
+    }
+
+    // Make a deep copy of all_cards
+    public List<Card> deep_copy() {
+        List<Card> cards = new ArrayList<Card>();
+        for(Card c : all_cards) {
+            cards.add(c);
+        }
+        return cards;
     }
 }
