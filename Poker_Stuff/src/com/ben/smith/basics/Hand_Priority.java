@@ -40,71 +40,59 @@ public class Hand_Priority {
     }
 
     public Card[] get_hand() {
-
-        List<Card> current_cards = deep_copy();
-
+        List<Card> original_cards = deep_copy();
         Collections.sort(all_cards);
 
-        Card[] final_hand = new Card[5];
-
-        Card[] straight = straight();
         Card[] flush = flush();
+        Card[] straight = straight();
 
-        // TODO see if accounting for seeing cards has an effect on the results below
+        Card[] hand_to_return = null;
 
-        Card[] pair = get_pair(0);
-        if(pair == null) {
-            for(int i = 0; i < final_hand.length; i++) {
-                final_hand[i] = get_high_card(i);
+        if(flush != null && straight != null) {
+            Card[] straight_flush = test_straight_flush();
+            if(straight_flush != null) {
+                all_cards = original_cards;
+                return straight_flush;
             }
-        } else if(pair.length == 2) {
-            for(int i = 0; i < 2; i++) {
-                final_hand[i] = pair[i];
-            }
-            pair = get_pair(1);
-            if(pair == null) {
-                final_hand[3] = get_high_card(0);
-                final_hand[3] = get_high_card(1);
-                final_hand[4] = get_high_card(2);
-            } else {
-                for(int i = 0; i < 2; i++) {
-                    final_hand[2 + i] = pair[i];
-                }
-            }
-        } else if(pair.length == 3) {
-            for(int i = 0; i < 3; i++) {
-                final_hand[i] = pair[i];
-            }
-            pair = get_pair(1);
-            if(pair == null) {
-                final_hand[3] = get_high_card(0);
-                final_hand[4] = get_high_card(1);
-            } else {
-                for(int i = 0; i < 2; i++) {
-                    final_hand[3 + i] = pair[i];
-                }
-            }
-        } else if(pair.length == 4) {
-            for(int i = 0; i < 4; i++) {
-                final_hand[i] = pair[i];
-            }
-            final_hand[4] = get_high_card(0);
         }
 
-        return final_hand;
+        if(four_of_a_kind_check()) {
+            all_cards = original_cards;
+            return get_pairs();
+        } else if(flush != null) {
+            all_cards = original_cards;
+            return flush;
+        } else if(straight != null) {
+            all_cards = original_cards;
+            return straight;
+        } else {
+            all_cards = original_cards;
+            return get_pairs();
+        }
     }
 
-    public Card[] get_hand_2() {
+    public boolean four_of_a_kind_check() {
+        for(int i = 0; i < numbers.length; i++) {
+            if(numbers[i] == 4) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-        List<Card> current_cards = deep_copy();
+    public boolean royal_flush_check(Card[] cards) {
+        if(cards[0].getNumber() == 14) { return true; }
+        return false;
+    }
 
-        Collections.sort(all_cards);
+
+    public Card[] get_pairs() {
 
         Card[] final_hand = new Card[5];
         int hand_size = 0;
 
-        Card[] biggest_pair = get_pair_2(0);
-        Card[] smallest_pair = get_pair_2(0);
+        Card[] biggest_pair = get_pair();
+        Card[] smallest_pair = get_pair();
 
         if(biggest_pair != null) {
             for(int i = 0; i < biggest_pair.length; i++) {
@@ -112,9 +100,6 @@ public class Hand_Priority {
                 hand_size++;
             }
         }
-//        for(int i = 0; i < hand_size; i++) {
-//            System.out.println(final_hand[i].get_card_string());
-//        }
 
         if(smallest_pair != null) {
             int j = 0;
@@ -144,55 +129,7 @@ public class Hand_Priority {
     }
 
     // Get at least a pair, at most 4 of a kind
-    public Card[] get_pair(int number_of_pairs_to_skip) {
-        Card[] return_cards = null;
-
-
-        int most_instances_index = 1;
-        for(int i = 3; i < numbers.length; i++) {
-            if(numbers[i] > numbers[most_instances_index]) {
-                most_instances_index = i;
-            }
-        }
-
-        if(number_of_pairs_to_skip == 0 && most_instances_index != 1) {
-            return_cards = new Card[numbers[most_instances_index]];
-            int i = 0;
-            for(Card c : all_cards) {
-                if(c.getNumber() == most_instances_index) {
-                    return_cards[i] = c;
-                    i++;
-                }
-            }
-            return return_cards;
-        }
-
-        int number_to_get = -1; // Equal to the index of the number ie 2 -> 2, 7 -> 7
-        for(int i = numbers.length - 1; i >= 2; i--) {
-            if(numbers[i] > 1) {
-                number_of_pairs_to_skip--;
-                if(number_of_pairs_to_skip <= 0) {
-                    number_to_get = i;
-                }
-            }
-        }
-
-        if(number_to_get > 1) {
-            return_cards = new Card[numbers[number_to_get]];
-            int i = 0;
-            for(Card c : all_cards) {
-                if(c.getNumber() == number_to_get) {
-                    return_cards[i] = c;
-                    i++;
-                }
-            }
-        }
-
-        return return_cards;
-    }
-
-    // TODO remove number_of_pairs_to_skip if the method works without it
-    public Card[] get_pair_2(int number_of_pairs_to_skip) {
+    public Card[] get_pair() {
         Card[] return_cards;
 
         int max_instance_index = 2;
