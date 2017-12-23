@@ -28,6 +28,9 @@ public class Hand_Priority {
 
     // Add more cards to our list of revealed cards
     public void add_cards(Card[] cards) {
+        if(cards == null) {
+            return;
+        }
         for(Card c : cards) {
             all_cards.add(c);
             numbers[c.getNumber()]++;
@@ -263,8 +266,11 @@ public class Hand_Priority {
     public void print_all_cards() {
         System.out.println("\nAll Cards\n-------------------------");
         for(Card c : all_cards) {
-            c.print_card();
+            if(c.getNumber() != 1) {
+                c.print_card();
+            }
         }
+        System.out.println();
     }
 
     // Print the number values of cards from 1 (ace low) to 14 (ace high)
