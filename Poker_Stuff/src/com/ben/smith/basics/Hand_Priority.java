@@ -39,14 +39,16 @@ public class Hand_Priority {
         }
     }
 
-    public void get_hand() {
+    public Card[] get_hand() {
+
+        List<Card> current_cards = deep_copy();
 
         Card[] final_hand = new Card[5];
 
         Card[] straight = straight();
         Card[] flush = flush();
 
-
+        // TODO see if accounting for seeing cards has an effect on the results below
 
         Card[] pair = get_pair(0);
         if(pair == null) {
@@ -87,6 +89,7 @@ public class Hand_Priority {
             final_hand[4] = get_high_card(0);
         }
 
+        return final_hand;
     }
 
     // To check for royal flush see if cards[0] == 14 (ie the highest number in the straight-flush is an ace)
@@ -150,7 +153,9 @@ public class Hand_Priority {
     public Card get_high_card(int number_of_cards_to_skip) {
         Card return_card = null;
         Collections.sort(all_cards);
-        return all_cards.get(all_cards.size() - 1 - number_of_cards_to_skip);
+        Card c = all_cards.get(all_cards.size() - 1 - number_of_cards_to_skip);
+//        all_cards.remove(all_cards.size() - 1 - number_of_cards_to_skip);
+        return c;
     }
 
     // Accepts a subset of cards, this is mainly used for detecting straight flushes
@@ -245,6 +250,13 @@ public class Hand_Priority {
         return flush_cards;
     }
 
+    // Print all of the cards we can currently see
+    public void print_all_cards() {
+        System.out.println("\nAll Cards\n-------------------------");
+        for(Card c : all_cards) {
+            c.print_card();
+        }
+    }
 
     // Print the number values of cards from 1 (ace low) to 14 (ace high)
     public void print_numbers() {
