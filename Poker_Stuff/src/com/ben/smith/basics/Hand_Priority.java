@@ -43,6 +43,8 @@ public class Hand_Priority {
 
         List<Card> current_cards = deep_copy();
 
+        Collections.sort(all_cards);
+
         Card[] final_hand = new Card[5];
 
         Card[] straight = straight();
@@ -87,6 +89,46 @@ public class Hand_Priority {
                 final_hand[i] = pair[i];
             }
             final_hand[4] = get_high_card(0);
+        }
+
+        return final_hand;
+    }
+
+    public Card[] get_hand_2() {
+
+        List<Card> current_cards = deep_copy();
+
+        Collections.sort(all_cards);
+
+        Card[] final_hand = new Card[5];
+        int hand_size = 0;
+
+        Card[] biggest_pair = get_pair_2(0);
+        Card[] smallest_pair = get_pair_2(0);
+
+        if(biggest_pair != null) {
+            for(int i = 0; i < biggest_pair.length; i++) {
+                final_hand[i] = biggest_pair[i];
+                hand_size++;
+            }
+        }
+//        for(int i = 0; i < hand_size; i++) {
+//            System.out.println(final_hand[i].get_card_string());
+//        }
+
+        if(smallest_pair != null) {
+            int j = 0;
+            for(int i = 0; i < final_hand.length; i++) {
+                if(final_hand[i] == null) {
+                    final_hand[i] = smallest_pair[j];
+                    j++;
+                    hand_size++;
+                }
+            }
+        }
+
+        for(int i = hand_size; i < 5; i++) {
+            final_hand[i] = get_high_card(i - hand_size);
         }
 
         return final_hand;
@@ -149,10 +191,40 @@ public class Hand_Priority {
         return return_cards;
     }
 
+    // TODO remove number_of_pairs_to_skip if the method works without it
+    public Card[] get_pair_2(int number_of_pairs_to_skip) {
+        Card[] return_cards;
+
+        int max_instance_index = 2;
+        for(int i = 3; i < numbers.length; i++) {
+            if(numbers[i] >= numbers[max_instance_index]) {
+                max_instance_index = i;
+            }
+        }
+
+        // If the max instances of a number is 1 then there are, by definition, no pairs/triples/quads
+        if(numbers[max_instance_index] == 1) {
+            return null;
+        }
+
+        return_cards = new Card[numbers[max_instance_index]];
+        numbers[max_instance_index] = 0;
+
+        int index = 0;
+        for(int i = all_cards.size() - 1; i >= 0; i--) {
+            if(all_cards.get(i).getNumber() == max_instance_index) {
+                return_cards[index] = all_cards.get(i);
+                index++;
+                all_cards.remove(i);
+            }
+        }
+
+        return return_cards;
+    }
+
     // Get the high card, pass in a number to skip that many cards, ie the second high card would skip 1 card
     public Card get_high_card(int number_of_cards_to_skip) {
         Card return_card = null;
-        Collections.sort(all_cards);
         Card c = all_cards.get(all_cards.size() - 1 - number_of_cards_to_skip);
 //        all_cards.remove(all_cards.size() - 1 - number_of_cards_to_skip);
         return c;

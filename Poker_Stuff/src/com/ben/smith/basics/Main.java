@@ -23,7 +23,7 @@ public class Main {
 
         hp.print_numbers();
 
-        Card[] cc = hp.get_hand();
+        Card[] cc = hp.get_hand_2();
 
 //        Card[] cc = hp.get_pair(0);
         if(cc == null) {
