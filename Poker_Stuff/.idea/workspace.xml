@@ -47,9 +47,12 @@
       <file leaf-file-name="Hand_Tests.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/ben/smith/basics/Hand_Tests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="69" column="0" lean-forward="true" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="189">
+              <caret line="19" column="40" lean-forward="false" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
+              <folding>
+                <element signature="e#2664#2665#0" expanded="true" />
+                <element signature="e#2692#2693#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -57,8 +60,8 @@
       <file leaf-file-name="Hand_Priority.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/ben/smith/basics/Hand_Priority.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="106" column="33" lean-forward="false" selection-start-line="106" selection-start-column="33" selection-end-line="106" selection-end-column="33" />
+            <state relative-caret-position="153">
+              <caret line="113" column="71" lean-forward="false" selection-start-line="113" selection-start-column="71" selection-end-line="113" selection-end-column="71" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -113,7 +116,12 @@
       <find>_2</find>
       <find>system.ou</find>
       <find>print</find>
+      <find>System.out.println</find>
+      <find>System.out.println(result);</find>
     </findStrings>
+    <replaceStrings>
+      <replace>System.out.println(&quot;: &quot; + result);</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -665,7 +673,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#2664#2665#0" expanded="true" />
+            <element signature="e#2692#2693#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -852,14 +863,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ben/smith/basics/Table.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ben/smith/basics/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -868,10 +871,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ben/smith/basics/Table.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ben/smith/basics/Hand_Priority.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="106" column="33" lean-forward="false" selection-start-line="106" selection-start-column="33" selection-end-line="106" selection-end-column="33" />
+        <state relative-caret-position="153">
+          <caret line="113" column="71" lean-forward="false" selection-start-line="113" selection-start-column="71" selection-end-line="113" selection-end-column="71" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -880,9 +891,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ben/smith/basics/Hand_Tests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="69" column="0" lean-forward="true" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="189">
+          <caret line="19" column="40" lean-forward="false" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
+          <folding>
+            <element signature="e#2664#2665#0" expanded="true" />
+            <element signature="e#2692#2693#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

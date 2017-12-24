@@ -103,14 +103,15 @@ public class Hand_Priority {
                 hand_size++;
             }
         }
-        if(biggest_pair.length == 4) {
+
+        if(biggest_pair != null && biggest_pair.length == 4) {
             smallest_pair = null;
         }
 
         if(smallest_pair != null) {
             int j = 0;
             for(int i = 0; i < final_hand.length; i++) {
-                if(final_hand[i] == null) {
+                if(final_hand[i] == null && j < smallest_pair.length) {
                     final_hand[i] = smallest_pair[j];
                     j++;
                     hand_size++;
