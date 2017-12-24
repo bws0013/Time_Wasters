@@ -47,7 +47,7 @@ public class Deck {
         return deck.length;
     }
 
-    // Shuffle a deck, this is currently used for randomly getting cards, later on I will just generate numbers
+    // Shuffle a deck, this is currently used for randomly getting cards, later on I will just generate values
     public void shuffle() {
         List<Card> temp_deck = Arrays.asList(deck);
         Collections.shuffle(temp_deck);

@@ -23,44 +23,7 @@ public class Main {
 
         Card[] cc = hp.get_hand();
 
-//        Card[] cc = hp.get_pair(0);
-        if(cc == null) {
-            System.out.println("Its null");
-        } else {
-            for(Card c : cc) {
-                c.print_card();
-            }
-        }
 
-//        cc = hp.straight(cc);
-//
-//        if(cc == null) {
-//            System.out.println("Its null");
-//        } else {
-//            for(Card c : cc) {
-//                c.print_card();
-//            }
-//        }
-//
-//        Card c = hp.get_high_card(0);
-//        c.print_card();
-//        c = hp.get_high_card(1);
-//        c.print_card();
-//
-
-//        int val = hp.straight();
-//
-//        System.out.println(val);
-//
-
-//
-//        val = hp.straight();
-//
-//        System.out.println(val);
-//
-//        hp.print_numbers();
-
-//        int c = hp.flush();
     }
 
 

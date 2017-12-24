@@ -14,7 +14,7 @@ public class Hand_Priority {
     private List<Card> all_cards = new ArrayList<Card>();
 
     // The numerical representation of the value of each card
-    private int[] numbers = new int[15];
+    private int[] values = new int[15];
     // A count of the relative suits of all of the cards we have seen
     private int[] suits = new int[4];
 
@@ -33,11 +33,11 @@ public class Hand_Priority {
         }
         for(Card c : cards) {
             all_cards.add(c);
-            numbers[c.getNumber()]++;
+            values[c.getvalue()]++;
             suits[c.getSuit()]++;
-            if(c.getNumber() == 14) {
+            if(c.getvalue() == 14) {
                 all_cards.add(new Card(1, c.getSuit()));
-                numbers[1]++;
+                values[1]++;
             }
         }
     }
@@ -75,8 +75,8 @@ public class Hand_Priority {
     }
 
     public boolean four_of_a_kind_check() {
-        for(int i = 0; i < numbers.length; i++) {
-            if(numbers[i] == 4) {
+        for(int i = 0; i < values.length; i++) {
+            if(values[i] == 4) {
                 return true;
             }
         }
@@ -84,7 +84,7 @@ public class Hand_Priority {
     }
 
     public boolean royal_flush_check(Card[] cards) {
-        if(cards[0].getNumber() == 14) { return true; }
+        if(cards[0].getvalue() == 14) { return true; }
         return false;
     }
 
@@ -126,7 +126,7 @@ public class Hand_Priority {
         return final_hand;
     }
 
-    // To check for royal flush see if cards[0] == 14 (ie the highest number in the straight-flush is an ace)
+    // To check for royal flush see if cards[0] == 14 (ie the highest value in the straight-flush is an ace)
     public Card[] test_straight_flush() {
         Card[] cards = null;
         if(straight() != null && flush() != null) {
@@ -140,23 +140,23 @@ public class Hand_Priority {
         Card[] return_cards;
 
         int max_instance_index = 2;
-        for(int i = 3; i < numbers.length; i++) {
-            if(numbers[i] >= numbers[max_instance_index]) {
+        for(int i = 3; i < values.length; i++) {
+            if(values[i] >= values[max_instance_index]) {
                 max_instance_index = i;
             }
         }
 
-        // If the max instances of a number is 1 then there are, by definition, no pairs/triples/quads
-        if(numbers[max_instance_index] == 1) {
+        // If the max instances of a value is 1 then there are, by definition, no pairs/triples/quads
+        if(values[max_instance_index] == 1) {
             return null;
         }
 
-        return_cards = new Card[numbers[max_instance_index]];
-        numbers[max_instance_index] = 0;
+        return_cards = new Card[values[max_instance_index]];
+        values[max_instance_index] = 0;
 
         int index = 0;
         for(int i = all_cards.size() - 1; i >= 0; i--) {
-            if(all_cards.get(i).getNumber() == max_instance_index) {
+            if(all_cards.get(i).getvalue() == max_instance_index) {
                 return_cards[index] = all_cards.get(i);
                 index++;
                 all_cards.remove(i);
@@ -166,11 +166,11 @@ public class Hand_Priority {
         return return_cards;
     }
 
-    // Get the high card, pass in a number to skip that many cards, ie the second high card would skip 1 card
-    public Card get_high_card(int number_of_cards_to_skip) {
+    // Get the high card, pass in a value to skip that many cards, ie the second high card would skip 1 card
+    public Card get_high_card(int value_of_cards_to_skip) {
         Card return_card = null;
 //        Collections.sort(all_cards);
-        Card c = all_cards.get(all_cards.size() - 1 - number_of_cards_to_skip);
+        Card c = all_cards.get(all_cards.size() - 1 - value_of_cards_to_skip);
         return c;
     }
 
@@ -185,7 +185,7 @@ public class Hand_Priority {
         int longest_seq = 1;
         int highest_index = 0;
         for(int i = 1; i < suited_card_list.size(); i++) {
-            if(suited_card_list.get(i).getNumber() - 1 == suited_card_list.get(i - 1).getNumber()) {
+            if(suited_card_list.get(i).getvalue() - 1 == suited_card_list.get(i - 1).getvalue()) {
                 longest_seq++;
             } else {
                 longest_seq = 1;
@@ -210,8 +210,8 @@ public class Hand_Priority {
         Card[] straight_cards = null;
         int highest_num = -1;
         int longest_seq = 0;
-        for(int i = 1; i < numbers.length; i++) {
-            if(numbers[i] != 0) {
+        for(int i = 1; i < values.length; i++) {
+            if(values[i] != 0) {
                 longest_seq++;
             } else {
                 if(longest_seq > 4) {
@@ -224,7 +224,7 @@ public class Hand_Priority {
             straight_cards = new Card[5];
             for(int i = 0; i < 5; i++) {
                 for(int j = 0; j < all_cards.size(); j++) {
-                    if(all_cards.get(j).getNumber() == highest_num - i) {
+                    if(all_cards.get(j).getvalue() == highest_num - i) {
                         straight_cards[i] = all_cards.get(j);
                         break;
                     }
@@ -270,17 +270,17 @@ public class Hand_Priority {
     public void print_all_cards() {
         System.out.println("\nAll Cards\n-------------------------");
         for(Card c : all_cards) {
-            if(c.getNumber() != 1) {
+            if(c.getvalue() != 1) {
                 c.print_card();
             }
         }
         System.out.println();
     }
 
-    // Print the number values of cards from 1 (ace low) to 14 (ace high)
-    public void print_numbers() {
-        for(int i = 1; i < numbers.length; i++) {
-            System.out.println(i + " : " + numbers[i]);
+    // Print the value values of cards from 1 (ace low) to 14 (ace high)
+    public void print_values() {
+        for(int i = 1; i < values.length; i++) {
+            System.out.println(i + " : " + values[i]);
         }
     }
 
