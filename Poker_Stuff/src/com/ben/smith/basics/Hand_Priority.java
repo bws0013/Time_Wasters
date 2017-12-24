@@ -59,19 +59,19 @@ public class Hand_Priority {
             }
         }
 
+
         if(four_of_a_kind_check()) {
-            all_cards = original_cards;
-            return get_pairs();
+            hand_to_return = get_pairs();
         } else if(flush != null) {
-            all_cards = original_cards;
-            return flush;
+            hand_to_return = flush;
         } else if(straight != null) {
-            all_cards = original_cards;
-            return straight;
+            hand_to_return = straight;
         } else {
-            all_cards = original_cards;
-            return get_pairs();
+            hand_to_return = get_pairs();
         }
+
+        all_cards = original_cards;
+        return hand_to_return;
     }
 
     public boolean four_of_a_kind_check() {
@@ -102,6 +102,9 @@ public class Hand_Priority {
                 final_hand[i] = biggest_pair[i];
                 hand_size++;
             }
+        }
+        if(biggest_pair.length == 4) {
+            smallest_pair = null;
         }
 
         if(smallest_pair != null) {
@@ -165,8 +168,8 @@ public class Hand_Priority {
     // Get the high card, pass in a number to skip that many cards, ie the second high card would skip 1 card
     public Card get_high_card(int number_of_cards_to_skip) {
         Card return_card = null;
+//        Collections.sort(all_cards);
         Card c = all_cards.get(all_cards.size() - 1 - number_of_cards_to_skip);
-//        all_cards.remove(all_cards.size() - 1 - number_of_cards_to_skip);
         return c;
     }
 
