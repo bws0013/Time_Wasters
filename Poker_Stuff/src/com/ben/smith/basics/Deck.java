@@ -1,8 +1,7 @@
 package com.ben.smith.basics;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by bensmith on 12/15/17.
@@ -14,9 +13,11 @@ public class Deck {
     public Deck() {
         Card[] deck = new Card[52];
 
+        int count = 0;
         for(int i = 0; i < 4; i++) {
             for(int j = 2; j < 15; j++) {
-                deck[(i * 13) + (j - 2)] = new Card(j, i);
+                deck[(i * 13) + (j - 2)] = new Card(j, i, count);
+                count++;
             }
         }
 
@@ -52,6 +53,23 @@ public class Deck {
         List<Card> temp_deck = Arrays.asList(deck);
         Collections.shuffle(temp_deck);
         deck = temp_deck.toArray(deck);
+    }
+
+    public Card[] get_random_cards(Card a, Card b, int cards_to_return) {
+        Set<Integer> card_numbers = new HashSet<Integer>(a.getNumber(), b.getNumber());
+        Random r = new Random();
+        Card[] return_cards = new Card[cards_to_return];
+
+        int count = 0;
+        int randomNum;
+        while(count < cards_to_return) {
+            randomNum = ThreadLocalRandom.current().nextInt(0, 52);
+            if(card_numbers.contains(randomNum) == false) {
+                return_cards[count] = deck[randomNum];
+                count++;
+            }
+        }
+        return return_cards;
     }
 
 }

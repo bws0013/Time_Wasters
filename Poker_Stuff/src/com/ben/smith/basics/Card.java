@@ -5,6 +5,9 @@ package com.ben.smith.basics;
  */
 public class Card implements Comparable<Card> {
 
+    // Card number from 0-51
+    private int number;
+
     // 2 3 4 5 6 7 8 9 10 j  q  k  a
     // 2 3 4 5 6 7 8 9 10 11 12 13 14
     // Card value 2-14
@@ -13,17 +16,18 @@ public class Card implements Comparable<Card> {
     // Suit is 0-3, Heart, Spade, Diamond, Club
     private int suit;
 
-    public Card(int value, int suit) {
+    public Card(int value, int suit, int number) {
         this.value = value;
         this.suit = suit;
+        this.number = number;
     }
 
     @Override
     public int compareTo(Card c) {
-        if(this.getvalue() > c.getvalue()) {
+        if(this.getValue() > c.getValue()) {
             return 1;
-        } else if(this.getvalue() == c.getvalue()) {
-            if(c.getSuit() > this.getvalue()) {
+        } else if(this.getValue() == c.getValue()) {
+            if(c.getSuit() > this.getValue()) {
                 return 1;
             }
             return 0;
@@ -40,19 +44,17 @@ public class Card implements Comparable<Card> {
         return String.format("[value: %s, Suit: %s]", value, suit);
     }
 
-    public int getvalue() {
-        return value;
+    public int getNumber() {
+        return number;
     }
 
-    public void setvalue(int value) {
-        this.value = value;
+    public int getValue() {
+        return value;
     }
 
     public int getSuit() {
         return suit;
     }
 
-    public void setSuit(int suit) {
-        this.suit = suit;
-    }
+
 }

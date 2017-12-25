@@ -52,7 +52,7 @@ public class Hand_Tests {
             return false;
         } else {
             for(int i = 0; i < 5; i++) {
-                if(final_hand[i].getvalue() != 7 - i) {
+                if(final_hand[i].getValue() != 7 - i) {
                     return false;
                 }
                 if(final_hand[i].getSuit() != 0) {
@@ -85,11 +85,11 @@ public class Hand_Tests {
         } else {
             int six_count = 0;
             for(int i = 0; i < 5; i++) {
-                if(final_hand[i].getvalue() == 6) {
+                if(final_hand[i].getValue() == 6) {
                     six_count++;
                 }
             }
-            if(six_count != 4 || final_hand[4].getvalue() != 7) {
+            if(six_count != 4 || final_hand[4].getValue() != 7) {
                 return false;
             }
             return true;
@@ -117,9 +117,9 @@ public class Hand_Tests {
             int five_count = 0;
             int four_count = 0;
             for(int i = 0; i < 5; i++) {
-                if(final_hand[i].getvalue() == 5) {
+                if(final_hand[i].getValue() == 5) {
                     five_count++;
-                } else if(final_hand[i].getvalue() == 4) {
+                } else if(final_hand[i].getValue() == 4) {
                     four_count++;
                 }
             }
@@ -174,7 +174,7 @@ public class Hand_Tests {
             return false;
         } else {
             for(int i = 0; i < 5; i++) {
-                if(!(final_hand[i].getvalue() == 9 - i)) {
+                if(!(final_hand[i].getValue() == 9 - i)) {
                     return false;
                 }
             }
@@ -202,7 +202,7 @@ public class Hand_Tests {
         } else {
             int five_count = 0;
             for(int i = 0; i < 5; i++) {
-                if(final_hand[i].getvalue() == 5) {
+                if(final_hand[i].getValue() == 5) {
                     five_count++;
                 }
             }
@@ -235,9 +235,9 @@ public class Hand_Tests {
             int twelve_count = 0;
             int five_count = 0;
             for(int i = 0; i < 5; i++) {
-                if(final_hand[i].getvalue() == 5) {
+                if(final_hand[i].getValue() == 5) {
                     five_count++;
-                } else if(final_hand[i].getvalue() == 12) {
+                } else if(final_hand[i].getValue() == 12) {
                     twelve_count++;
                 }
             }
@@ -269,7 +269,7 @@ public class Hand_Tests {
         } else {
             int four_count = 0;
             for(int i = 0; i < 5; i++) {
-                if(final_hand[i].getvalue() == 4) {
+                if(final_hand[i].getValue() == 4) {
                     four_count++;
                 }
             }
@@ -295,19 +295,19 @@ public class Hand_Tests {
 
         Card[] final_hand = hp.get_hand();
 
-        if(final_hand[0].getvalue() != 14) {
+        if(final_hand[0].getValue() != 14) {
             return false;
         }
-        if(final_hand[1].getvalue() != 13) {
+        if(final_hand[1].getValue() != 13) {
             return false;
         }
-        if(final_hand[2].getvalue() != 8) {
+        if(final_hand[2].getValue() != 8) {
             return false;
         }
-        if(final_hand[3].getvalue() != 7) {
+        if(final_hand[3].getValue() != 7) {
             return false;
         }
-        if(final_hand[4].getvalue() != 6) {
+        if(final_hand[4].getValue() != 6) {
             return false;
         }
         return true;

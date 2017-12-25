@@ -6,3 +6,7 @@ Things to consider:
   - How many opponents?
   - How many revealed community cards?
   - Are the opponents playing any two cards or are they only playing hands above some threshold? 
+
+Two big todos:
+  - Multithreading
+  - Comparing hands

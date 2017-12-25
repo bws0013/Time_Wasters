@@ -26,6 +26,12 @@ public class Hand_Priority {
         add_cards(community);
     }
 
+    public Hand_Priority(Hand hand) {
+        Card[] hand_cards = hand.get_hand();
+
+        add_cards(hand_cards);
+    }
+
     // Add more cards to our list of revealed cards
     public void add_cards(Card[] cards) {
         if(cards == null) {
@@ -33,10 +39,10 @@ public class Hand_Priority {
         }
         for(Card c : cards) {
             all_cards.add(c);
-            values[c.getvalue()]++;
+            values[c.getValue()]++;
             suits[c.getSuit()]++;
-            if(c.getvalue() == 14) {
-                all_cards.add(new Card(1, c.getSuit()));
+            if(c.getValue() == 14) {
+                all_cards.add(new Card(1, c.getSuit(), c.getNumber()));
                 values[1]++;
             }
         }
@@ -84,7 +90,7 @@ public class Hand_Priority {
     }
 
     public boolean royal_flush_check(Card[] cards) {
-        if(cards[0].getvalue() == 14) { return true; }
+        if(cards[0].getValue() == 14) { return true; }
         return false;
     }
 
@@ -156,7 +162,7 @@ public class Hand_Priority {
 
         int index = 0;
         for(int i = all_cards.size() - 1; i >= 0; i--) {
-            if(all_cards.get(i).getvalue() == max_instance_index) {
+            if(all_cards.get(i).getValue() == max_instance_index) {
                 return_cards[index] = all_cards.get(i);
                 index++;
                 all_cards.remove(i);
@@ -185,7 +191,7 @@ public class Hand_Priority {
         int longest_seq = 1;
         int highest_index = 0;
         for(int i = 1; i < suited_card_list.size(); i++) {
-            if(suited_card_list.get(i).getvalue() - 1 == suited_card_list.get(i - 1).getvalue()) {
+            if(suited_card_list.get(i).getValue() - 1 == suited_card_list.get(i - 1).getValue()) {
                 longest_seq++;
             } else {
                 longest_seq = 1;
@@ -224,7 +230,7 @@ public class Hand_Priority {
             straight_cards = new Card[5];
             for(int i = 0; i < 5; i++) {
                 for(int j = 0; j < all_cards.size(); j++) {
-                    if(all_cards.get(j).getvalue() == highest_num - i) {
+                    if(all_cards.get(j).getValue() == highest_num - i) {
                         straight_cards[i] = all_cards.get(j);
                         break;
                     }
@@ -270,7 +276,7 @@ public class Hand_Priority {
     public void print_all_cards() {
         System.out.println("\nAll Cards\n-------------------------");
         for(Card c : all_cards) {
-            if(c.getvalue() != 1) {
+            if(c.getValue() != 1) {
                 c.print_card();
             }
         }
