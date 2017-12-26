@@ -18,7 +18,7 @@ public class Main {
 
 //        List<Card[]> newList = Collections.synchronizedList(new ArrayList<Card[]>());
 
-        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(4);
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(16);
 
 //        for (int i = 0; i < 5; i++) {
 //            Deck d = new Deck();
@@ -30,16 +30,25 @@ public class Main {
 //            newList.add(hp.get_hand());
 //        }
 
+        int number_of_hands_we_get = 100000;
 
-        Card[][] source = new Card[10][];
+        Card[][] source = new Card[number_of_hands_we_get][];
 
         AtomicReferenceArray<Card[]> final_hands = new AtomicReferenceArray<Card[]>(source);
 
-        for (int i = 0; i < 10; i++) {
+        long start = System.currentTimeMillis();
+
+//        for (int i = 0; i < number_of_hands_we_get; i++) {
+//            Task task = new Task("Task " + i);
+//            executor.execute(task);
+//        }
+
+        Deck d = new Deck();
+        Hand h = new Hand(d.get(0), d.get(1));
+
+        for (int i = 0; i < number_of_hands_we_get; i++) {
             Task task = new Task("Task " + i);
             executor.execute(task);
-//            Card[] hand = task.getFinal_hand();
-//            final_hands.set(i, hand);
         }
 
         executor.shutdown();
@@ -49,6 +58,8 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        System.out.println(get_elapsed_time(start));
 
 //        for(int i = 0; i < 10; i++) {
 //            if(final_hands.get(i) == null) {
@@ -80,15 +91,20 @@ public class Main {
 //            System.out.println();
 //        }
 
-        for(Card[] hand : hand_list) {
-            for(Card c : hand) {
-                c.print_card();
-            }
-            System.out.println();
-        }
+//        for(Card[] hand : hand_list) {
+//            for(Card c : hand) {
+//                c.print_card();
+//            }
+//            System.out.println();
+//        }
         System.out.println(hand_list.size());
 
     }
 
+
+    public static double get_elapsed_time(long start) {
+        long now = System.currentTimeMillis();
+        return (now - start) / 1000.0;
+    }
 
 }
