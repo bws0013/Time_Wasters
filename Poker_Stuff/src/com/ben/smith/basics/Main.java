@@ -11,13 +11,15 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
  */
 public class Main {
 
+    public static List<Card[]> hand_list = Collections.synchronizedList(new ArrayList<Card[]>());
 
     public static void main(String[] args) {
 
 
-        List<Card[]> newList = Collections.synchronizedList(new ArrayList<Card[]>());
+//        List<Card[]> newList = Collections.synchronizedList(new ArrayList<Card[]>());
 
-        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(4);
+
 //        for (int i = 0; i < 5; i++) {
 //            Deck d = new Deck();
 //            Hand h = new Hand(d.get(0), d.get(1));
@@ -28,14 +30,36 @@ public class Main {
 //            newList.add(hp.get_hand());
 //        }
 
-        for (int i = 0; i <= 5; i++)
-        {
+
+        Card[][] source = new Card[10][];
+
+        AtomicReferenceArray<Card[]> final_hands = new AtomicReferenceArray<Card[]>(source);
+
+        for (int i = 0; i < 10; i++) {
             Task task = new Task("Task " + i);
-            System.out.println("A new task has been added : " + task.getName());
             executor.execute(task);
+//            Card[] hand = task.getFinal_hand();
+//            final_hands.set(i, hand);
         }
+
         executor.shutdown();
 
+        try {
+            while (!executor.awaitTermination(3, TimeUnit.SECONDS)) {}
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+//        for(int i = 0; i < 10; i++) {
+//            if(final_hands.get(i) == null) {
+//                continue;
+//            }
+//            Card[] cc = final_hands.get(i);
+//            for(Card c : cc) {
+//                c.print_card();
+//            }
+//            System.out.println();
+//        }
 
 //        for(int i = 0; i < 10; i++) {
 //            Future future = executor.submit(() -> {
@@ -55,6 +79,14 @@ public class Main {
 //            }
 //            System.out.println();
 //        }
+
+        for(Card[] hand : hand_list) {
+            for(Card c : hand) {
+                c.print_card();
+            }
+            System.out.println();
+        }
+        System.out.println(hand_list.size());
 
     }
 

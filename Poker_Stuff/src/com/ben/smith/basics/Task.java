@@ -28,6 +28,6 @@ public class Task implements Runnable {
         Card[] community_cards = d.get_random_cards(h.getCard1(), h.getCard2(), 5);
         hp.add_cards(community_cards);
         final_hand = hp.get_hand();
-        System.out.println(name);
+        Main.hand_list.add(final_hand);
     }
 }
