@@ -7,8 +7,11 @@ public class Hands_Compare {
 
     public static void main(String[] args) {
 
-
-
+        // For this we will use the new hand_value variable in Hand_Priority
+        // To compare the hands first compare the hand value
+        // If they are equal then iterate over the hand for an instance where card value at index i in hand a
+        // is greater than card value at index i in hand b
+        // If they are both always equal than the hands are of the same value
 
     }
 

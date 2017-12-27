@@ -10,6 +10,9 @@ import java.util.List;
  */
 public class Hand_Priority {
 
+    // The value we will use to compare hands
+    public int hand_value = 0;
+
     // A list of every card (including hand) that we have seen
     private List<Card> all_cards = new ArrayList<Card>();
 
@@ -60,19 +63,23 @@ public class Hand_Priority {
         if(flush != null && straight != null) {
             Card[] straight_flush = test_straight_flush();
             if(straight_flush != null) {
+                hand_value = 9;
                 all_cards = original_cards;
                 return straight_flush;
             }
         }
 
-
         if(four_of_a_kind_check()) {
+            hand_value = 8;
             hand_to_return = get_pairs();
         } else if(flush != null) {
+            hand_value = 6;
             hand_to_return = flush;
         } else if(straight != null) {
+            hand_value = 5;
             hand_to_return = straight;
         } else {
+//            hand_value = 1;
             hand_to_return = get_pairs();
         }
 
@@ -102,6 +109,22 @@ public class Hand_Priority {
 
         Card[] biggest_pair = get_pair();
         Card[] smallest_pair = get_pair();
+
+        if(biggest_pair == null) {
+            hand_value = 1;
+        } else if(biggest_pair.length == 2) {
+            hand_value = 2;
+        } else if(biggest_pair.length == 3) {
+            hand_value = 4;
+        }
+
+        if(biggest_pair.length == 2 && smallest_pair.length == 2) {
+            hand_value = 3;
+        } else if(biggest_pair.length > 2 && smallest_pair.length >= 2) {
+            hand_value = 7;
+        }
+
+
 
         if(biggest_pair != null) {
             for(int i = 0; i < biggest_pair.length; i++) {
@@ -281,6 +304,11 @@ public class Hand_Priority {
             }
         }
         System.out.println();
+    }
+
+    // Get the numerical value of the hand for comparison
+    public int getHand_value() {
+        return hand_value;
     }
 
     // Print the value values of cards from 1 (ace low) to 14 (ace high)
