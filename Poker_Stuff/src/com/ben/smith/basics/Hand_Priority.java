@@ -11,7 +11,7 @@ import java.util.List;
 public class Hand_Priority {
 
     // The value we will use to compare hands
-    public int hand_value = 0;
+    private int hand_value = 0;
 
     // A list of every card (including hand) that we have seen
     private List<Card> all_cards = new ArrayList<Card>();
