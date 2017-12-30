@@ -7,26 +7,75 @@ package com.ben.smith.basics;
  */
 public class Hand_Tests {
 
+    // TODO configure this to work with hand_value also
+
+    public static int hand_priority_number = 0;
+
     public static void main(String[] args) {
+        int_tests();
+    }
+
+    public static void int_tests() {
+        int result;
+
+        // There is no royal flush test as by definition a royal flush is a straight flush from 10 to 14
+        straight_flush_test();
+        System.out.println("Straight flush:\t" + hand_priority_number);
+
+        four_of_a_kind_test();
+        System.out.println("4 of a kind:\t" + hand_priority_number);
+
+        full_house_test();
+        System.out.println("Full House:\t\t" + hand_priority_number);
+
+        flush_test();
+        System.out.println("Flush:\t\t\t" + hand_priority_number);
+
+        straight_test();
+        System.out.println("Straight:\t\t" + hand_priority_number);
+
+        three_of_a_kind_test();
+        System.out.println("3 of a kind:\t" + hand_priority_number);
+
+        two_pair_test();
+        System.out.println("Two pair:\t\t" + hand_priority_number);
+
+        one_pair_test();
+        System.out.println("Pair:\t\t\t" + hand_priority_number);
+
+        high_cards_test();
+        System.out.println("High card:\t\t" + hand_priority_number);
+
+    }
+
+    public static void string_tests() {
         boolean result;
 
         // There is no royal flush test as by definition a royal flush is a straight flush from 10 to 14
         result = straight_flush_test();
         System.out.println("Straight flush:\t" + result);
+
         result = four_of_a_kind_test();
         System.out.println("4 of a kind:\t" + result);
-        result = flush_test();
-        System.out.println("Full House:\t\t" + result);
+
         result = full_house_test();
+        System.out.println("Full House:\t\t" + result);
+
+        result = flush_test();
         System.out.println("Flush:\t\t\t" + result);
+
         result = straight_test();
         System.out.println("Straight:\t\t" + result);
+
         result = three_of_a_kind_test();
         System.out.println("3 of a kind:\t" + result);
+
         result = two_pair_test();
         System.out.println("Two pair:\t\t" + result);
+
         result = one_pair_test();
         System.out.println("Pair:\t\t\t" + result);
+
         result = high_cards_test();
         System.out.println("High card:\t\t" + result);
     }
@@ -47,6 +96,7 @@ public class Hand_Tests {
         hp.add_cards(d.get(2,6));
 
         Card[] final_hand = hp.get_hand();
+        hand_priority_number = hp.getHand_value();
 
         if(final_hand == null) {
             return false;
@@ -79,12 +129,14 @@ public class Hand_Tests {
         hp.add_cards(d.get(42,45));
 
         Card[] final_hand = hp.get_hand();
+        hand_priority_number = hp.getHand_value();
 
         if(final_hand == null) {
             return false;
         } else {
             int six_count = 0;
             for(int i = 0; i < 5; i++) {
+//                final_hand[i].print_card();
                 if(final_hand[i].getValue() == 6) {
                     six_count++;
                 }
@@ -110,6 +162,7 @@ public class Hand_Tests {
         hp.add_cards(d.get(40,42));
 
         Card[] final_hand = hp.get_hand();
+        hand_priority_number = hp.getHand_value();
 
         if(final_hand == null) {
             return false;
@@ -143,6 +196,7 @@ public class Hand_Tests {
         hp.add_cards(d.get(38,41));
 
         Card[] final_hand = hp.get_hand();
+        hand_priority_number = hp.getHand_value();
 
         if(final_hand == null) {
             return false;
@@ -169,6 +223,7 @@ public class Hand_Tests {
         hp.add_cards(d.get(17,21));
 
         Card[] final_hand = hp.get_hand();
+        hand_priority_number = hp.getHand_value();
 
         if(final_hand == null) {
             return false;
@@ -196,6 +251,7 @@ public class Hand_Tests {
         hp.add_cards(d.get(37,39));
 
         Card[] final_hand = hp.get_hand();
+        hand_priority_number = hp.getHand_value();
 
         if(final_hand == null) {
             return false;
@@ -228,6 +284,7 @@ public class Hand_Tests {
         hp.add_cards(d.get(49,50));
 
         Card[] final_hand = hp.get_hand();
+        hand_priority_number = hp.getHand_value();
 
         if(final_hand == null) {
             return false;
@@ -263,6 +320,7 @@ public class Hand_Tests {
         hp.add_cards(d.get(47,48));
 
         Card[] final_hand = hp.get_hand();
+        hand_priority_number = hp.getHand_value();
 
         if(final_hand == null) {
             return false;
@@ -294,6 +352,7 @@ public class Hand_Tests {
         hp.add_cards(d.get(37,39));
 
         Card[] final_hand = hp.get_hand();
+        hand_priority_number = hp.getHand_value();
 
         if(final_hand[0].getValue() != 14) {
             return false;

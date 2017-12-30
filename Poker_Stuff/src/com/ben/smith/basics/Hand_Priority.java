@@ -70,8 +70,8 @@ public class Hand_Priority {
         }
 
         if(four_of_a_kind_check()) {
-            hand_value = 8;
             hand_to_return = get_pairs();
+            hand_value = 8;
         } else if(flush != null) {
             hand_value = 6;
             hand_to_return = flush;
@@ -118,10 +118,12 @@ public class Hand_Priority {
             hand_value = 4;
         }
 
-        if(biggest_pair.length == 2 && smallest_pair.length == 2) {
-            hand_value = 3;
-        } else if(biggest_pair.length > 2 && smallest_pair.length >= 2) {
-            hand_value = 7;
+        if(biggest_pair != null && smallest_pair != null) {
+            if (biggest_pair.length == 2 && smallest_pair.length == 2) {
+                hand_value = 3;
+            } else if (biggest_pair.length > 2 && smallest_pair.length >= 2) {
+                hand_value = 7;
+            }
         }
 
 
