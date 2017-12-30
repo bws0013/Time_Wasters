@@ -37,7 +37,7 @@ public class Hands_Compare {
 
         Card[] my_final_hand = my_hand_priority.get_hand();
 
-        // TODO Figure out how tieing is going to work here
+        // TODO Figure out how tieing is going to work here, currently it just assumes you either lose or win
         for(int i = 0; i < hp_list.size(); i++) {
             Card[] their_final_hand = hp_list.get(i).get_hand();
             for(int j = 0; j < my_final_hand.length; j++) {
@@ -47,7 +47,7 @@ public class Hands_Compare {
             }
         }
 
-
+        return 1;
     }
 
     public int compare_two_hands(Hand a, Hand b, Card[] community) {

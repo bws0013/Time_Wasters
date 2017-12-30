@@ -72,4 +72,24 @@ public class Deck {
         return return_cards;
     }
 
+    public Card[] get_random_cards(List<Card> cards, int cards_to_return) {
+        Set<Integer> card_numbers = new HashSet<Integer>();
+        for(Card c : cards) {
+            card_numbers.add(c.getNumber());
+        }
+        Random r = new Random();
+        Card[] return_cards = new Card[cards_to_return];
+
+        int count = 0;
+        int randomNum;
+        while(count < cards_to_return) {
+            randomNum = ThreadLocalRandom.current().nextInt(0, 52);
+            if(card_numbers.contains(randomNum) == false) {
+                return_cards[count] = deck[randomNum];
+                count++;
+            }
+        }
+        return return_cards;
+    }
+
 }
