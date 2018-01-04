@@ -2,20 +2,19 @@ package main
 
 import (
   "os"
-  "fmt"
   "log"
   "bufio"
   "strconv"
   "encoding/csv"
 )
 
-func main() {
-  // read_csv_better("./storage/big_test_1.csv", false)
-  read_csv_better("./storage/big_test_1.csv", true)
-  fmt.Println("hw")
-}
+// func main() {
+//   // read_csv_better("./storage/big_test_1.csv", false)
+//   header_to_data_slice := read_csv_better("./storage/big_test_1.csv", true)
+//   fmt.Println(header_to_data_slice)
+// }
 
-func read_csv_better(filename string, has_header bool) {
+func read_csv_better(filename string, has_header bool) map[string][]string {
   f, err := os.Open(filename)
   check(err)
 
@@ -33,15 +32,7 @@ func read_csv_better(filename string, has_header bool) {
   } else {
     header_to_data_slice = get_with_default_headers(records)
   }
-
-  // fmt.Println(get_headers(header_to_data_slice))
-  //
-  // _, m := get_with_included_headers_with_order(records)
-  // for k, v := range m {
-  //   fmt.Println(k, "->", v)
-  // }
-
-
+  return header_to_data_slice
 }
 
 func get_headers(header_to_data_slice map[string][]string) []string {
@@ -56,7 +47,7 @@ func get_with_default_headers(matrix [][]string) map[string][]string {
   header_to_data_slice := make(map[string][]string)
   for i := 0; i < len(matrix); i++ {
     for j := 0; j < len(matrix[i]); j++ {
-      header_to_data_slice[strconv.Itoa(j)] = append(header_to_data_slice[string(j)], matrix[i][j])
+      header_to_data_slice[strconv.Itoa(j)] = append(header_to_data_slice[strconv.Itoa(j)], matrix[i][j])
     }
   }
   return header_to_data_slice
@@ -68,20 +59,11 @@ func get_with_included_headers(matrix [][]string) map[string][]string {
 
   for i := 1; i < len(matrix); i++ {
     for j := 0; j < len(matrix[i]); j++ {
-      header_to_data_slice[headers[j]] = append(header_to_data_slice[string(j)], matrix[i][j])
+      header_to_data_slice[headers[j]] = append(header_to_data_slice[headers[j]], matrix[i][j])
     }
   }
-  return header_to_data_slice
-}
 
-func get_ordered_headers() {
-  /*
-    We might be able to use something like this later
-    0 -> column 1
-    1 -> column 2
-    ...
-    n -> column n + 1
-  */
+  return header_to_data_slice
 }
 
 func get_with_included_headers_with_order(matrix [][]string) (map[string][]string, map[int]string) {
@@ -95,7 +77,7 @@ func get_with_included_headers_with_order(matrix [][]string) (map[string][]strin
 
   for i := 1; i < len(matrix); i++ {
     for j := 0; j < len(matrix[i]); j++ {
-      header_to_data_slice[headers[j]] = append(header_to_data_slice[string(j)], matrix[i][j])
+      header_to_data_slice[headers[j]] = append(header_to_data_slice[headers[j]], matrix[i][j])
     }
   }
   return header_to_data_slice, index_to_header
@@ -106,4 +88,14 @@ func check(err error) {
   if err != nil {
     log.Fatal(err)
   }
+}
+
+func get_ordered_headers() {
+  /*
+    We might be able to use something like this later
+    0 -> column 1
+    1 -> column 2
+    ...
+    n -> column n + 1
+  */
 }
