@@ -6,11 +6,14 @@ import (
 )
 
 func main() {
-  x, y := read_csv("./storage/big_test_1.csv", true)
-  // fmt.Println(len(x), "+", len(y))
 
-  print_math(x, y)
-  fmt.Println("done")
+  get_x_y_pairs()
+
+  // x, y := read_csv("./storage/big_test_1.csv", true)
+  // // fmt.Println(len(x), "+", len(y))
+  //
+  // print_math(x, y)
+  // fmt.Println("done")
 }
 
 func read_csv(filename string, has_headers bool) ([]float64, []float64){
@@ -37,4 +40,63 @@ func read_csv(filename string, has_headers bool) ([]float64, []float64){
   }
 
   return clean_x, clean_y
+}
+
+func get_x_y_pairs() {
+  letters := []string{"a", "b", "c"}
+
+  indices := make([]int, len(letters))
+
+  for i, _ := range letters {
+    indices[i] = i
+  }
+
+  combinations(indices, 2)
+
+
+}
+
+// Copied from https://play.golang.org/p/JEgfXR2zSH
+func combinations(iterable []int, r int) {
+
+  pool := iterable
+	n := len(pool)
+
+	if r > n {
+		return
+	}
+
+	indices := make([]int, r)
+	for i := range indices {
+		indices[i] = i
+	}
+
+	result := make([]int, r)
+	for i, el := range indices {
+		result[i] = pool[el]
+	}
+
+	fmt.Println(result)
+
+	for {
+		i := r - 1
+		for ; i >= 0 && indices[i] == i+n-r; i -= 1 {
+		}
+
+		if i < 0 {
+			return
+		}
+
+		indices[i] += 1
+		for j := i + 1; j < r; j += 1 {
+			indices[j] = indices[j-1] + 1
+		}
+
+		for ; i < len(indices); i += 1 {
+			result[i] = pool[indices[i]]
+		}
+		fmt.Println(result)
+
+	}
+
 }
