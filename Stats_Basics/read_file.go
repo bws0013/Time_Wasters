@@ -7,7 +7,7 @@ import (
 
 func main() {
 
-  get_x_y_pairs()
+  get_x_y_pairs([]string{"a", "b", "c"})
 
   // x, y := read_csv("./storage/big_test_1.csv", true)
   // // fmt.Println(len(x), "+", len(y))
@@ -42,28 +42,43 @@ func read_csv(filename string, has_headers bool) ([]float64, []float64){
   return clean_x, clean_y
 }
 
-func get_x_y_pairs() {
-  letters := []string{"a", "b", "c"}
+func get_x_y_pairs(column_names []string) {
 
-  indices := make([]int, len(letters))
+  fmt.Println(column_names)
 
-  for i, _ := range letters {
+  indices := make([]int, len(column_names))
+
+  for i, _ := range column_names {
     indices[i] = i
   }
 
-  combinations(indices, 2)
+  index_combinations := combinations(indices, 2)
+  // combinations(indices, 2)
+  fmt.Println(index_combinations)
 
 
+
+  // column_combinations := make([][]string, len(index_combinations), len(index_combinations))
+  //
+  // for i, combo := range index_combinations {
+  //   column_combinations[i] = []string{column_names[combo[0]], column_names[combo[1]]}
+  // }
+  //
+  // fmt.Println(index_combinations)
+  // fmt.Println(column_combinations)
 }
 
+
 // Copied from https://play.golang.org/p/JEgfXR2zSH
-func combinations(iterable []int, r int) {
+func combinations(iterable []int, r int) [][]int {
+
+  all_combinations := make([][]int, 0)
 
   pool := iterable
 	n := len(pool)
 
 	if r > n {
-		return
+		return all_combinations
 	}
 
 	indices := make([]int, r)
@@ -76,7 +91,9 @@ func combinations(iterable []int, r int) {
 		result[i] = pool[el]
 	}
 
-	fmt.Println(result)
+  local_combination := make([]int, len(result), cap(result))
+  copy(local_combination, result)
+  all_combinations = append(all_combinations, local_combination)
 
 	for {
 		i := r - 1
@@ -84,7 +101,7 @@ func combinations(iterable []int, r int) {
 		}
 
 		if i < 0 {
-			return
+			return all_combinations
 		}
 
 		indices[i] += 1
@@ -95,8 +112,11 @@ func combinations(iterable []int, r int) {
 		for ; i < len(indices); i += 1 {
 			result[i] = pool[indices[i]]
 		}
-		fmt.Println(result)
+
+    local_combination = make([]int, len(result), cap(result))
+    copy(local_combination, result)
+    all_combinations = append(all_combinations, local_combination)
 
 	}
-
+  return all_combinations
 }
