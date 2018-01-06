@@ -7,20 +7,58 @@ import (
 
 func main() {
 
-  get_x_y_pairs([]string{"a", "b", "c"})
+  // get_x_y_pairs([]string{"a", "b", "c"})
 
-  // x, y := read_csv("./storage/big_test_1.csv", true)
+  // x, y := get_column_data("TUITIONFEE_IN", "completion_rate_4yr_150nt", "./storage/big_test_1.csv", true)
   // // fmt.Println(len(x), "+", len(y))
-  //
+
   // print_math(x, y)
-  // fmt.Println("done")
+
+  headers := []string{"TUITIONFEE_IN", "TUITIONFEE_OUT", "completion_rate_4yr_150nt", "act_scores.midpoint.cumulative"}
+
+  evaluate_two_dimensions(headers, "./storage/big_test_1.csv", true)
+
+  fmt.Println("done")
 }
 
-func read_csv(filename string, has_headers bool) ([]float64, []float64){
+func evaluate_two_dimensions(all_headers []string, filename string, has_headers bool) {
   header_to_data_slice := read_csv_better(filename, has_headers)
 
-  dirty_x := header_to_data_slice["TUITIONFEE_IN"]
-  dirty_y := header_to_data_slice["completion_rate_4yr_150nt"]
+  all_combinations := get_x_y_pairs(all_headers)
+
+  for _, combo := range all_combinations {
+    fmt.Println(combo[0], "<->", combo[1])
+    dirty_x := header_to_data_slice[combo[0]]
+    dirty_y := header_to_data_slice[combo[1]]
+
+    clean_x := make([]float64, 0, 0)
+    clean_y := make([]float64, 0, 0)
+
+    for i := 0; i < len(dirty_x); i++ {
+      if dirty_x[i] == "NULL" || dirty_y[i] == "NULL" {
+        // Disreguard as we cannot use the data for it cannot be a number
+      } else {
+        fixed_x, err := strconv.ParseFloat(dirty_x[i], 64)
+        check(err)
+        fixed_y, err := strconv.ParseFloat(dirty_y[i], 64)
+        check(err)
+        clean_x = append(clean_x, fixed_x)
+        clean_y = append(clean_y, fixed_y)
+      }
+    }
+    print_math(clean_x, clean_y)
+    fmt.Print("\n\n\n")
+  }
+}
+
+func get_column_data(column_x, column_y, filename string, has_headers bool) ([]float64, []float64) {
+  header_to_data_slice := read_csv_better(filename, has_headers)
+
+  // dirty_x := header_to_data_slice["TUITIONFEE_IN"]
+  // dirty_y := header_to_data_slice["completion_rate_4yr_150nt"]
+
+  dirty_x := header_to_data_slice[column_x]
+  dirty_y := header_to_data_slice[column_y]
 
   clean_x := make([]float64, 0, 0)
   clean_y := make([]float64, 0, 0)
@@ -38,13 +76,10 @@ func read_csv(filename string, has_headers bool) ([]float64, []float64){
       clean_y = append(clean_y, fixed_y)
     }
   }
-
   return clean_x, clean_y
 }
 
-func get_x_y_pairs(column_names []string) {
-
-  fmt.Println(column_names)
+func get_x_y_pairs(column_names []string) [][]string {
 
   indices := make([]int, len(column_names))
 
@@ -53,23 +88,18 @@ func get_x_y_pairs(column_names []string) {
   }
 
   index_combinations := combinations(indices, 2)
-  // combinations(indices, 2)
-  fmt.Println(index_combinations)
 
+  column_combinations := make([][]string, len(index_combinations), cap(index_combinations))
 
+  for i, combo := range index_combinations {
+    column_combinations[i] = []string{column_names[combo[0]], column_names[combo[1]]}
+  }
 
-  // column_combinations := make([][]string, len(index_combinations), len(index_combinations))
-  //
-  // for i, combo := range index_combinations {
-  //   column_combinations[i] = []string{column_names[combo[0]], column_names[combo[1]]}
-  // }
-  //
-  // fmt.Println(index_combinations)
-  // fmt.Println(column_combinations)
+  return column_combinations
 }
 
 
-// Copied from https://play.golang.org/p/JEgfXR2zSH
+// Modified the algo from https://play.golang.org/p/JEgfXR2zSH
 func combinations(iterable []int, r int) [][]int {
 
   all_combinations := make([][]int, 0)
