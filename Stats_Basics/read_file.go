@@ -13,10 +13,12 @@ func main() {
   // // fmt.Println(len(x), "+", len(y))
 
   // print_math(x, y)
+  // ACTCMMID -> act_scores.midpoint.cumulative
+  // C150_4 -> completion_rate_4yr_150nt
+  headers := []string{"TUITIONFEE_IN", "TUITIONFEE_OUT", "C150_4", "ACTCMMID"}
 
-  headers := []string{"TUITIONFEE_IN", "TUITIONFEE_OUT", "completion_rate_4yr_150nt", "act_scores.midpoint.cumulative"}
-
-  evaluate_two_dimensions(headers, "./storage/big_test_1.csv", true)
+  evaluate_two_dimensions(headers, "./storage/MERGED2013_14_PP.csv", true)
+  // evaluate_two_dimensions(headers, "./storage/big_test_1.csv", true)
 
   fmt.Println("done")
 }
@@ -69,8 +71,10 @@ func get_column_data(column_x, column_y, filename string, has_headers bool) ([]f
     } else {
       fixed_x, err := strconv.ParseFloat(dirty_x[i], 64)
       check(err)
+      // if err != nil { continue }
       fixed_y, err := strconv.ParseFloat(dirty_y[i], 64)
       check(err)
+      // if err != nil { continue }
 
       clean_x = append(clean_x, fixed_x)
       clean_y = append(clean_y, fixed_y)
