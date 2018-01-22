@@ -2,73 +2,51 @@ package main
 
 import (
   "fmt"
-  "time"
-  "gopkg.in/src-d/go-git.v4"
-  "gopkg.in/src-d/go-git.v4/plumbing/object"
+  "os"
+	"os/exec"
 )
 
 // TODO rewrite all git methods by hand
 
 func main() {
+  not_main()
 
   conf_data := Get_target_repo()
   repo_addr := "https://github.com/bws0013/Compound_Words.git"
 
   storage_dir := conf_data + "/" + Get_repo_name(repo_addr)
 
-  r, err := git.PlainOpen(conf_data)
+  git_add(storage_dir)
+}
 
+func get_cwd() string {
+  dir, err := os.Getwd()
   Check(err)
+  return dir
+}
 
-  w, err := r.Worktree()
-	Check(err)
+func change_cwd(path string) {
+  os.Chdir(path)
+}
 
-  _, err = w.Add(conf_data)
+func git_add(path string) {
+  current_dir := get_cwd()
+  defer change_cwd(current_dir)
 
-  status, err := w.Status()
-	Check(err)
+  change_cwd(path)
 
-	fmt.Println(status)
+  cmd := "git"
+  	args := []string{"add", "--all"}
+  	if err := exec.Command(cmd, args...).Run(); err != nil {
+  		fmt.Println("Git add failed!")
+      Check(err)
+  	}
+}
 
-  // fmt.Println(r)
+func git_commit() {
 
-  commit, err := w.Commit("example go-git commit", &git.CommitOptions{
-		Author: &object.Signature{
-			Name:  "John Doe",
-			Email: "john@doe.org",
-			When:  time.Now(),
-		},
-	})
+}
 
-  Check(err)
-
-  obj, err := r.CommitObject(commit)
-	Check(err)
-
-	fmt.Println(obj)
-
-
-  err = r.Push(&git.PushOptions{})
-
-  Check(err)
-
-  // // ... retrieving the HEAD reference
-	// ref, err := r.Head()
-	// Check(err)
-  //
-	// // ... retrieves the commit history
-	// cIter, err := r.Log(&git.LogOptions{From: ref.Hash()})
-	// Check(err)
-  //
-	// // ... just iterates over the commits
-	// var cCount int
-	// err = cIter.ForEach(func(c *object.Commit) error {
-	// 	cCount++
-  //
-	// 	return nil
-	// })
-	// Check(err)
-
-	// fmt.Println(cCount)
+func git_push() {
 
 }
