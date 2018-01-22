@@ -8,7 +8,7 @@ import (
   "gopkg.in/src-d/go-git.v4"
 )
 
-func main() {
+func not_main() {
 
   conf_data := Get_target_repo()
   repo_addr := "https://github.com/bws0013/Compound_Words.git"
