@@ -11,7 +11,8 @@ import (
 func not_main() {
 
   conf_data := Get_target_repo()
-  repo_addr := "https://github.com/bws0013/Compound_Words.git"
+  // repo_addr := "https://github.com/bws0013/Compound_Words.git"
+  repo_addr := "https://github.com/bws0013/go_chef.git"
 
   // storage_dir := "./../storage/" + Get_repo_name(repo_addr)
 

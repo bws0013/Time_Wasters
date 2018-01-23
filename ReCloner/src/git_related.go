@@ -12,11 +12,14 @@ func main() {
   not_main()
 
   conf_data := Get_target_repo()
-  repo_addr := "https://github.com/bws0013/Compound_Words.git"
+  // repo_addr := "https://github.com/bws0013/Compound_Words.git"
 
-  storage_dir := conf_data + "/" + Get_repo_name(repo_addr)
+  storage_dir := conf_data
 
   git_add(storage_dir)
+  git_commit(storage_dir, "test upload")
+  git_push(storage_dir)
+
 }
 
 func get_cwd() string {
@@ -36,17 +39,37 @@ func git_add(path string) {
   change_cwd(path)
 
   cmd := "git"
-  	args := []string{"add", "--all"}
-  	if err := exec.Command(cmd, args...).Run(); err != nil {
-  		fmt.Println("Git add failed!")
-      Check(err)
-  	}
+	args := []string{"add", "--all"}
+	if err := exec.Command(cmd, args...).Run(); err != nil {
+		fmt.Println("Git add failed!")
+    Check(err)
+	}
 }
 
-func git_commit() {
+func git_commit(path, commit_message string) {
+  current_dir := get_cwd()
+  defer change_cwd(current_dir)
 
+  change_cwd(path)
+
+  cmd := "git"
+	args := []string{"commit", "-m", commit_message}
+	if err := exec.Command(cmd, args...).Run(); err != nil {
+		fmt.Println("Git commit failed!")
+    Check(err)
+	}
 }
 
-func git_push() {
+func git_push(path string) {
+  current_dir := get_cwd()
+  defer change_cwd(current_dir)
 
+  change_cwd(path)
+
+  cmd := "git"
+  args := []string{"push"}
+  if err := exec.Command(cmd, args...).Run(); err != nil {
+    fmt.Println("Git push failed!")
+    Check(err)
+  }
 }
