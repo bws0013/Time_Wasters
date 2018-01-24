@@ -8,6 +8,7 @@ import (
   "gopkg.in/src-d/go-git.v4"
 )
 
+// Would be main if I was testing just this class
 func not_main() {
 
   conf_data := Get_target_repo()
@@ -26,6 +27,7 @@ func not_main() {
   // defer os.RemoveAll(storage_dir)
 }
 
+// Delete the .git file at a particular location
 func Remove_git_file(git_file_path string) {
   err := os.RemoveAll(git_file_path + "/.git")
   Check(err)
@@ -37,6 +39,7 @@ func Get_repo_name(repo_addr string) string {
   return strings.TrimSuffix(addr_elements[len(addr_elements) - 1], ".git")
 }
 
+// Clone a repo to a particular directory
 func Clone_to_dir(dir, repo_addr string) {
   _, err := git.PlainClone(dir, false, &git.CloneOptions{
     URL: repo_addr,
@@ -44,12 +47,14 @@ func Clone_to_dir(dir, repo_addr string) {
   Check(err)
 }
 
+// Make a directory at a given path
 func Make_storage_dir(path string) {
   if _, err := os.Stat(path); os.IsNotExist(err) {
     os.MkdirAll(path, 0755)
   }
 }
 
+// Error checking with custom error message enabled (bad way of doing it)
 func Check_with_message(err error, message string) {
   if err != nil {
     fmt.Println(message)
@@ -57,6 +62,7 @@ func Check_with_message(err error, message string) {
   }
 }
 
+// Error checking
 func Check(err error) {
   if err != nil {
     log.Fatal(err)

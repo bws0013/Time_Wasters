@@ -22,16 +22,19 @@ func main() {
 
 }
 
+// Get the current working directory
 func get_cwd() string {
   dir, err := os.Getwd()
   Check(err)
   return dir
 }
 
+// Change the working directory
 func change_cwd(path string) {
   os.Chdir(path)
 }
 
+// Use machine to git add --all
 func git_add(path string) {
   current_dir := get_cwd()
   defer change_cwd(current_dir)
@@ -46,6 +49,7 @@ func git_add(path string) {
 	}
 }
 
+// Use machine to git commit with a passed in commit message
 func git_commit(path, commit_message string) {
   current_dir := get_cwd()
   defer change_cwd(current_dir)
@@ -60,6 +64,7 @@ func git_commit(path, commit_message string) {
 	}
 }
 
+// Use machine to git push
 func git_push(path string) {
   current_dir := get_cwd()
   defer change_cwd(current_dir)
