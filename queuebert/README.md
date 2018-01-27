@@ -13,3 +13,10 @@ The interface should just be 3 buttons.
 - Skip
   - Skip to the next task on the list
   - Increment number of times skipped
+
+Other ideas to maybe include
+- Displayed count of total things in the queue.
+- Variants of done (completed, not completed, quit, etc)
+- Data about completion habits over time.
+- Have an idea title
+  - With a longer idea description that appears if you click the title
