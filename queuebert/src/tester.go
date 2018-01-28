@@ -10,7 +10,7 @@ var (
   idea_queue_test = make([]*Idea.Idea, 0)
 )
 
-func _main() {
+func main() {
 
   // idea_queue_test := idea.new()
 
@@ -36,6 +36,13 @@ func _main() {
   x := idea_queue_test[0]
 
   fmt.Println(x.Get_Text())
+
+  x.Print_Json()
+
+  text = `{"text":"maybe","skips":0,"time_open":1517167156,"time_closed":-1}`
+
+  Idea.New_Idea_From_Json(text)
+
 }
 
 // func queue() {

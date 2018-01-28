@@ -1,15 +1,15 @@
 package Idea
 
 import (
-  // "fmt"
   "time"
+  "encoding/json"
 )
 
 type Idea struct {
-    Text string
-    Skips  int64
-    Time_open int64
-    Time_closed int64
+    Text        string  `json:"text"`
+    Skips       int64   `json:"skips"`
+    Time_open   int64   `json:"time_open"`
+    Time_closed int64   `json:"time_closed"`
 }
 
 func New_Idea(text string) *Idea {
@@ -20,7 +20,18 @@ func New_Idea(text string) *Idea {
   i.Time_closed = int64(-1)
 
   return i
-  // return Idea{Text: "First not", skips: 0, Time_open: current_time, Time_closed: 0}
+}
+
+func New_Idea_From_Json(idea_string string) *Idea {
+  var idea *Idea
+  bytes := []byte(idea_string)
+  json.Unmarshal(bytes, &idea)
+  return idea
+}
+
+func (i *Idea) Print_Json() string {
+  b, _ := json.Marshal(i)
+  return string(b)
 }
 
 func (i *Idea) Close() {

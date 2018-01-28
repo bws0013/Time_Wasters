@@ -14,20 +14,22 @@ var (
 // Copying from here: https://www.codementor.io/codehakase/building-a-restful-api-with-golang-a6yivzqdo
 
 // our main function
-func main() {
+func _main() {
 
 	router := mux.NewRouter()
 
   router.HandleFunc("/queuebert", Get_Idea).Methods("GET")
   router.HandleFunc("/queuebert/", Get_Idea).Methods("GET")
   router.HandleFunc("/queuebert/skip", Skip_Idea).Methods("GET")
-  router.HandleFunc("/queuebert/add", Add_Test).Methods("GET")
+  router.HandleFunc("/queuebert/add", Add_Test).Methods("POST")
   // router.HandleFunc("/queuebert/{id}", CreatePerson).Methods("POST")
   // router.HandleFunc("/queuebert/{ild}", DeletePerson).Methods("DELETE")
   log.Fatal(http.ListenAndServe(":8000", router))
 }
 
 // ***** RESTful stuff below *****
+
+// Use for content types https://www.w3.org/Protocols/rfc1341/7_1_Text.html
 
 func Get_Idea(w http.ResponseWriter, r *http.Request) {
 
