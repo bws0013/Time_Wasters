@@ -20,7 +20,7 @@ func New_Idea(text string) *idea {
   i.time_closed = int64(-1)
 
   return i
-  // return idea{text: "First not", skips: 0, time_open: current_time, time_closed: 0}
+  // return Idea{text: "First not", skips: 0, time_open: current_time, time_closed: 0}
 }
 
 func (i *idea) Close() {
@@ -48,4 +48,12 @@ func (i *idea) Is_Open() bool {
     return true
   }
   return false
+}
+
+func (i *idea) Set_Text(new_text string) {
+  i.text = new_text
+}
+
+func (i *idea) Add_Skip() {
+  i.skips = i.skips + 1
 }
