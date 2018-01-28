@@ -9,7 +9,7 @@ import (
 )
 
 var (
-  idea_queue []idea
+  idea_queue = make([]*Idea.Idea, 0)
 )
 // Copying from here: https://www.codementor.io/codehakase/building-a-restful-api-with-golang-a6yivzqdo
 
@@ -33,7 +33,7 @@ func Get_Idea(w http.ResponseWriter, r *http.Request) {
   idea_text := "No ideas yet"
 
   if len(idea_queue) > 0 {
-    idea_text = idea_queue[0]
+    idea_text = idea_queue[0].Get_Text()
   }
 
   fmt.Println("I have been chosen")

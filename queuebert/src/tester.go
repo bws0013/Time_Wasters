@@ -6,15 +6,21 @@ import (
   // "container/list"
 )
 
-func main() {
+var (
+  idea_queue_test = make([]*Idea.Idea, 0)
+)
 
-  // idea_queue := idea.new()
+func _main() {
 
-  // var idea_queue []*idea
+  // idea_queue_test := idea.new()
+
+  // var idea_queue_test []Idea.Idea
+
+  // idea_queue_test := make([]Idea.Idea, 0)
 
   text := "first"
 
-  right := idea.New_Idea(text)
+  right := Idea.New_Idea(text)
 
   fmt.Println(right.Get_Text())
 
@@ -25,7 +31,11 @@ func main() {
   // right.Close()
   fmt.Println(right.Is_Open())
 
-  fmt.Println()
+  idea_queue_test = append(idea_queue_test, right)
+
+  x := idea_queue_test[0]
+
+  fmt.Println(x.Get_Text())
 }
 
 // func queue() {
