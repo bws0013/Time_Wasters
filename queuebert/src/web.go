@@ -19,8 +19,9 @@ func main() {
 	router := mux.NewRouter()
 
   router.HandleFunc("/queuebert", Get_Idea).Methods("GET")
-  // router.HandleFunc("/queuebert/", GetPeople).Methods("GET")
-  // router.HandleFunc("/queuebert/{id}", GetPerson).Methods("GET")
+  router.HandleFunc("/queuebert/", Get_Idea).Methods("GET")
+  router.HandleFunc("/queuebert/skip", Skip_Idea).Methods("GET")
+  router.HandleFunc("/queuebert/add", Add_Test).Methods("GET")
   // router.HandleFunc("/queuebert/{id}", CreatePerson).Methods("POST")
   // router.HandleFunc("/queuebert/{ild}", DeletePerson).Methods("DELETE")
   log.Fatal(http.ListenAndServe(":8000", router))
@@ -42,55 +43,30 @@ func Get_Idea(w http.ResponseWriter, r *http.Request) {
   w.Write([]byte(idea_text))
 }
 
-// func GetPeople(w http.ResponseWriter, r *http.Request) {
-//     jsonObj := gabs.New()
-//     jsonObj.Array("Names")
-//     for _, v := range people {
-//       jsonObj.ArrayAppend(v.get_name(), "Names")
-//     }
-//
-//     json_string := jsonObj.String()
-//     // fmt.Println(json_string)
-//
-//
-//     // fmt.Println(string(bytes))
-//     fmt.Println("I have been chosen")
-//     // json.NewEncoder(w).Encode(ff)
-//     w.Header().Set("Content-Type", "application/json")
-//     w.Write([]byte(json_string))
-// }
-//
-// func GetPerson(w http.ResponseWriter, r *http.Request) {
-//   params := mux.Vars(r)
-//   for _, item := range people {
-//     if item.get_name() == params["id"] {
-//       // jsonParsedObj, err := gabs.ParseJSON())
-//       // check_err(err)
-//       w.Header().Set("Content-Type", "application/json")
-//       w.Write([]byte(item.Json.String()))
-//       return
-//     }
-//   }
-//   json.NewEncoder(w).Encode(&Person{})
-// }
-//
-// func CreatePerson(w http.ResponseWriter, r *http.Request) {
-//   params := mux.Vars(r)
-//   person := new_person(params["id"])
-//   people = append(people, *person)
-//   fmt.Println(*person)
-//   json.NewEncoder(w).Encode(people)
-// }
-//
-// func DeletePerson(w http.ResponseWriter, r *http.Request) {
-//   params := mux.Vars(r)
-//   for index, item := range people {
-//     fmt.Println(params["ild"])
-//   	if item.get_name() == params["ild"] {
-//     	people = append(people[:index], people[index+1:]...)
-//       break
-//   	}
-//   	json.NewEncoder(w).Encode(people)
-// 	}
-//
+func Skip_Idea(w http.ResponseWriter, r *http.Request) {
+
+  if len(idea_queue) > 1 {
+    front := idea_queue[0]
+    front.Add_Skip()
+    idea_queue = idea_queue[1:]
+    idea_queue = append(idea_queue, front)
+  }
+
+  Get_Idea(w, r)
+}
+
+func Add_Test(w http.ResponseWriter, r *http.Request) {
+
+  new_idea := Idea.New_Idea(fmt.Sprintf("Item: %d", len(idea_queue) + 1))
+
+  idea_queue = append(idea_queue, new_idea)
+  Get_Idea(w, r)
+}
+
+// func queue() {
+//   queue := make([]idea, 0)
+//   queue := append(queue, 1)
+//   x := queue[0]
+//   queue = queue[1:]
+//   queue := append(queue, x)
 // }
