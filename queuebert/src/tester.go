@@ -10,7 +10,7 @@ var (
   idea_queue_test = make([]*Idea.Idea, 0)
 )
 
-func main() {
+func _main() {
 
   // idea_queue_test := idea.new()
 
