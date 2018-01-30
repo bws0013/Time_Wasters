@@ -37,7 +37,7 @@ func _main() {
 
   fmt.Println(x.Get_Text())
 
-  x.Print_Json()
+  x.Get_Json()
 
   text = `{"text":"maybe","skips":0,"time_open":1517167156,"time_closed":-1}`
 

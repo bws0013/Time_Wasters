@@ -29,7 +29,7 @@ func New_Idea_From_Json(idea_string string) *Idea {
   return idea
 }
 
-func (i *Idea) Print_Json() string {
+func (i *Idea) Get_Json() string {
   b, _ := json.Marshal(i)
   return string(b)
 }

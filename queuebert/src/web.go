@@ -23,8 +23,9 @@ func main() {
   router.HandleFunc("/queuebert", Get_Idea).Methods("GET")
   router.HandleFunc("/queuebert/", Get_Idea).Methods("GET")
   router.HandleFunc("/queuebert/skip", Skip_Idea).Methods("GET")
-  router.HandleFunc("/queuebert/add", Add_Test).Methods("PUT")
+  router.HandleFunc("/queuebert/add", Add_Test).Methods("POST")
   router.HandleFunc("/queuebert/load", Load_Test_Data).Methods("PUT")
+  router.HandleFunc("/queuebert/save", Save_Test_Data).Methods("PUT")
   // router.HandleFunc("/queuebert/{id}", CreatePerson).Methods("POST")
   // router.HandleFunc("/queuebert/{ild}", DeletePerson).Methods("DELETE")
   log.Fatal(http.ListenAndServe(":8000", router))
@@ -33,6 +34,32 @@ func main() {
 // ***** RESTful stuff below *****
 
 // Use for content types https://www.w3.org/Protocols/rfc1341/7_1_Text.html
+
+func Save_Test_Data(w http.ResponseWriter, r *http.Request) {
+    finished_filename := "./../storage/finished.out"
+    in_progress_filename := "./../storage/in_progress.out"
+
+    var finished_data string
+    var in_progress_data string
+
+    for _, idea := range idea_queue {
+      if idea.Is_Open() {
+        in_progress_data += idea.Get_Json() + "\n"
+      } else {
+        finished_data += idea.Get_Json() + "\n"
+      }
+    }
+
+    d1 := []byte(finished_data)
+    err := ioutil.WriteFile(finished_filename, d1, 0644)
+    Check(err)
+
+    d2 := []byte(in_progress_data)
+    err = ioutil.WriteFile(in_progress_filename, d2, 0644)
+    Check(err)
+
+    Get_Idea(w, r)
+}
 
 func Load_Test_Data(w http.ResponseWriter, r *http.Request) {
 
