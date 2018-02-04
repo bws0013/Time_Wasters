@@ -1,6 +1,7 @@
 package main
 
 import (
+    "os"
     "fmt"
     "log"
     "./idea"
@@ -12,6 +13,7 @@ import (
 
 var (
   idea_queue = make([]*Idea.Idea, 0)
+  duplicate_check = make(map[int64]bool)
 )
 // Copying from here: https://www.codementor.io/codehakase/building-a-restful-api-with-golang-a6yivzqdo
 
@@ -42,16 +44,21 @@ func Save_Test_Data(w http.ResponseWriter, r *http.Request) {
     var finished_data string
     var in_progress_data string
 
-    for _, idea := range idea_queue {
+    // duplicate_check := make(map[int64]bool)
+
+    for i, idea := range idea_queue {
       if idea.Is_Open() {
         in_progress_data += idea.Get_Json() + "\n"
       } else {
         finished_data += idea.Get_Json() + "\n"
+        idea_queue = append(idea_queue[:i], idea_queue[i+1:]...)
       }
     }
 
     d1 := []byte(finished_data)
-    err := ioutil.WriteFile(finished_filename, d1, 0644)
+    f, err := os.OpenFile(finished_filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+    Check(err)
+    _, err = f.Write(d1);
     Check(err)
 
     d2 := []byte(in_progress_data)
@@ -63,7 +70,9 @@ func Save_Test_Data(w http.ResponseWriter, r *http.Request) {
 
 func Load_Test_Data(w http.ResponseWriter, r *http.Request) {
 
-  filename := "./../storage/database.in"
+  // filename := "./../storage/database.in"
+
+  filename := "./../storage/in_progress.out"
 
   bytes, err := ioutil.ReadFile(filename)
   Check(err)
@@ -75,6 +84,12 @@ func Load_Test_Data(w http.ResponseWriter, r *http.Request) {
   for _, line := range lines {
     if len(line) == 0 { continue }
     idea := Idea.New_Idea_From_Json(line)
+
+    if duplicate_check[idea.Get_Time_Open()] {
+      continue;
+    }
+    duplicate_check[idea.Get_Time_Open()] = true
+
     idea_queue = append(idea_queue, idea)
   }
   Get_Idea(w, r)

@@ -46,11 +46,11 @@ func (i *Idea) Get_Skips() int64 {
   return i.Skips
 }
 
-func (i *Idea) Get_Time_open() int64 {
+func (i *Idea) Get_Time_Open() int64 {
   return i.Time_open
 }
 
-func (i *Idea) Get_Time_closed() int64 {
+func (i *Idea) Get_Time_Closed() int64 {
   return i.Time_closed
 }
 
