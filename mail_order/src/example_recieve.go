@@ -7,6 +7,8 @@ import (
 	"github.com/emersion/go-imap"
 )
 
+// Example copied from https://github.com/emersion/go-imap
+
 func main() {
 	log.Println("Connecting to server...")
 
@@ -68,6 +70,8 @@ func main() {
 	log.Println("Last 4 messages:")
 	for msg := range messages {
 		log.Println("* " + msg.Envelope.Subject)
+    // log.Println("* " + msg.Envelope.Body)
+    log.Println("* " + msg.Envelope)
 	}
 
 	if err := <-done; err != nil {
